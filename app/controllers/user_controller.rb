@@ -7,4 +7,11 @@ class UserController < ApplicationController
     user.password = params[:password]
     user.save
   end
+
+  def login
+    user = User.find_by(email: params[:email])
+    if user && user.authenticate(params[:password])
+      redirect_to '/'
+    end
+  end
 end
