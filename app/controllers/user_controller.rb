@@ -1,5 +1,10 @@
 class UserController < ApplicationController
   def create
+    if params[:password] != params[:password_confirmation]
+      redirect_to '/user/new', alert: 'Passwords do not match'
+      return
+    end
+
     user = User.new
     user.id = SecureRandom.uuid
     user.name = params[:name]
