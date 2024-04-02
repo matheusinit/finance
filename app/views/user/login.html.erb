@@ -8,8 +8,20 @@
       <div>
         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Endereço de e-mail</label>
         <div class="mt-2">
-          <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
+          <input id="email" name="email" type="email" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
         </div>
+        <% if flash[:alert].present? and flash[:alert] == 'Endereço de e-mail não informado' %>
+          <div class="mt-2 flex items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-red-700">
+              <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
+            </svg>
+
+            <div class="text-xs text-red-700 font-medium">
+              <%= flash[:alert] %>
+            </div>
+          </div>
+        <% end %>
+
       </div>
 
       <div >
@@ -18,8 +30,20 @@
         </div>
 
         <div class="mt-2">
-          <input id="password" name="password" type="password" data-password-toggle-target="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
+          <input id="password" name="password" type="password" data-password-toggle-target="password" autocomplete="current-password" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
         </div>
+
+        <% if flash[:alert].present? and flash[:alert] == 'Senha não informada' %>
+          <div class="mt-2 flex items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-red-700">
+              <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
+            </svg>
+
+            <div class="text-xs text-red-700 font-medium">
+              <%= flash[:alert] %>
+            </div>
+          </div>
+        <% end %>
 
         <div class="flex items-center space-x-2 mt-2">
           <input type="checkbox" id="show-password" class="rounded border-gray-300 text-purple-600 focus:ring-purple-600" data-action="click->password-toggle#toggle" />

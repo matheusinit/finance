@@ -14,6 +14,16 @@ class UserController < ApplicationController
   end
 
   def login
+    if params[:email] != nil and params[:email].blank?
+      redirect_to '/login', alert: 'Endereço de e-mail não informado'
+      return
+    end
+
+    if params[:password] != nil and params[:password].blank?
+      redirect_to '/login', alert: 'Senha não informada'
+      return
+    end
+
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
       redirect_to '/'
