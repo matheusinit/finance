@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "build": "turbo build"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo-rails": "^8.0.4",
+    "stimulus": "^3.2.2"
+  }
+}

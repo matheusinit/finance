@@ -4,7 +4,7 @@
   </h2>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form class="space-y-6">
+    <form class="space-y-6" data-controller="password-toggle">
       <div>
         <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Nome</label>
         <div class="mt-2">
@@ -19,15 +19,20 @@
         </div>
       </div>
 
-      <div>
+      <div >
         <div class="flex items-center justify-between">
-          <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Senha</label>
+          <label for="password"  class="block text-sm font-medium leading-6 text-gray-900">Senha</label>
         </div>
         <div class="mt-2">
-          <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
+          <input id="password" name="password" type="password" data-password-toggle-target="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
         </div>
         <div class="mt-1">
-          <small class="block text-xs text-gray-500 text-justify">Deve conter pelo menos 10 caracteres, com letras maiúsculas, minúsculas, dígitos e caracteres especiais (como ?.-!,*&;) </small>
+          <small class="block text-xs text-gray-500 text-justify" >Deve conter pelo menos 10 caracteres, com letras maiúsculas, minúsculas, dígitos e caracteres especiais (como ?.-!,*&;) </small>
+        </div>
+
+        <div class="flex items-center space-x-2 mt-1">
+          <input type="checkbox" id="show-password" class="rounded border-gray-300 text-purple-600 focus:ring-purple-600" data-action="click->password-toggle#toggle" /> 
+          <label class="text-sm text-gray-900" for="show-password">Mostrar senha</label>
         </div>
       </div>
 
@@ -36,8 +41,14 @@
           <label for="password_confirmation" class="block text-sm font-medium leading-6 text-gray-900">Confirmação da senha</label>
         </div>
         <div class="mt-2">
-          <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
+          <input id="password_confirmation" name="password_confirmation" data-password-toggle-target="passwordConfirmation" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
         </div>
+
+        <div class="flex items-center space-x-2 mt-2">
+          <input type="checkbox" id="show-password-confirmation" class="rounded border-gray-300 text-purple-600 focus:ring-purple-600" data-action="click->password-toggle#togglePasswordConfirmation" /> 
+          <label class="text-sm text-gray-900" for="show-password-confirmation">Mostrar senha</label>
+        </div>
+
       </div>
 
       <div>
