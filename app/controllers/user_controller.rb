@@ -19,6 +19,15 @@ class UserController < ApplicationController
       return
     end
 
+    is_valid_email = (params[:email] =~ URI::MailTo::EMAIL_REGEXP) != nil
+    is_blank_email = (params[:email] == nil and params[:email].blank?)
+
+    unless is_valid_email or is_blank_email
+      logger.debug "Invalid email: #{params[:email]}"
+      redirect_to '/login', alert: 'Endereço de e-mail inválido'
+      return
+    end
+
     if params[:password] != nil and params[:password].blank?
       redirect_to '/login', alert: 'Senha não informada'
       return

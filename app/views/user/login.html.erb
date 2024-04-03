@@ -4,7 +4,7 @@
   </h2>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form class="space-y-6" data-controller="password-toggle">
+    <form class="space-y-6" data-controller="password-toggle" novalidate>
       <div>
         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Endereço de e-mail</label>
         <div class="mt-2">
@@ -22,6 +22,17 @@
           </div>
         <% end %>
 
+        <% if flash[:alert].present? and flash[:alert] == 'Endereço de e-mail inválido' %>
+          <div class="mt-2 flex items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-red-700">
+              <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
+            </svg>
+
+            <div class="text-xs text-red-700 font-medium">
+              <%= flash[:alert] %>
+            </div>
+          </div>
+        <% end %>
       </div>
 
       <div >
