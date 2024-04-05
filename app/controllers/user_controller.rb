@@ -30,7 +30,7 @@ class UserController < ApplicationController
 
     is_blank_password = (params[:password] != nil and params[:password].blank?)
 
-    if params[:password] != nil and params[:password].blank?
+    if is_blank_password
       redirect_to '/login', alert: 'Senha não informada'
       return
     end
