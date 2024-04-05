@@ -28,14 +28,19 @@ class UserController < ApplicationController
       return
     end
 
+    is_blank_password = (params[:password] != nil and params[:password].blank?)
+
     if params[:password] != nil and params[:password].blank?
       redirect_to '/login', alert: 'Senha não informada'
       return
     end
 
     user = User.find_by(email: params[:email])
+
     if user && user.authenticate(params[:password])
       redirect_to '/'
+    elsif not is_blank_email and not is_blank_password 
+      redirect_to '/login', alert: 'Credenciais inválidas'
     end
   end
 end
