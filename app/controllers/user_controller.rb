@@ -33,7 +33,6 @@ class UserController < ApplicationController
     is_blank_password = (params[:password] != nil and params[:password].blank?)
 
     if is_blank_password
-      increase_login_attemps(user)
       redirect_to '/login', alert: 'Senha não informada'
       return
     end
@@ -41,6 +40,7 @@ class UserController < ApplicationController
     if user && user.authenticate(params[:password])
       redirect_to '/'
     elsif not is_blank_email and not is_blank_password 
+      increase_login_attemps(user)
       redirect_to '/login', alert: 'Credenciais inválidas'
     end
   end
@@ -52,11 +52,6 @@ class UserController < ApplicationController
       raise ArgumentError.new("Object user must be of Class User")
     end
 
-    if user.login_attemps == nil
-      user.update(login_attemps: 1)
-    end
-
-    user.login_attemps += 1
-    user.save
+    user.increment!(:login_attempts)
   end
 end
