@@ -53,7 +53,9 @@ class UserController < ApplicationController
     if user && user.authenticate(params[:password])
       redirect_to '/'
     elsif not is_email_blank and not is_password_blank
-      if account and account.updated_at <= 10.minutes.ago
+      login_block_time = 10.minutes
+
+      if account and account.updated_at <= login_block_time.ago
         reset_login_attempts(user)
       end
 
@@ -87,15 +89,13 @@ class UserController < ApplicationController
     unless user.is_a?(User)
       raise ArgumentError.new("Object user must be of Class User")
     end
+    
+    login_block_time = 10.minutes
 
     account = Account.find_by(user_id: user.id)
-    account.updated_at > 10.minutes.ago
+    account.updated_at > login_block_time.ago
 
-    if account && account.login_attempts >= 3 and account.updated_at > 10.minutes.ago
-      return true
-    end
-
-    return false
+    return account && account.login_attempts >= 3 && account.updated_at > login_block_time.ago
   end
 
   def reset_login_attempts(user)
