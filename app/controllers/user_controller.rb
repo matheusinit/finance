@@ -25,23 +25,23 @@ class UserController < ApplicationController
   end
 
   def login
-    if params[:email] != nil and params[:email].blank?
+    is_email_blank = params[:email].blank?
+
+    if params[:email] != nil and is_email_blank
       redirect_to '/login', alert: 'Endereço de e-mail não informado'
       return
     end
 
     is_valid_email = (params[:email] =~ URI::MailTo::EMAIL_REGEXP) != nil
-    is_blank_email = params[:email].blank?
 
-    unless is_valid_email or params[:email].blank?
-      logger.debug "Invalid email: #{params[:email]}"
+    unless is_valid_email or is_email_blank
       redirect_to '/login', alert: 'Endereço de e-mail inválido'
       return
     end
 
-    is_blank_password = (params[:password] != nil and params[:password].blank?)
+    is_password_blank = (params[:password] != nil and params[:password].blank?)
 
-    if is_blank_password
+    if is_password_blank
       redirect_to '/login', alert: 'Senha não informada'
       return
     end
@@ -52,7 +52,7 @@ class UserController < ApplicationController
 
     if user && user.authenticate(params[:password])
       redirect_to '/'
-    elsif not is_blank_email and not is_blank_password 
+    elsif not is_email_blank and not is_password_blank
       if account and account.updated_at <= 10.minutes.ago
         reset_login_attempts(user)
       end
@@ -61,7 +61,6 @@ class UserController < ApplicationController
       login_is_blocked = is_login_blocked?(user)
 
       if login_is_blocked
-        logger.debug "Too many login attempts: #{account}"
         redirect_to '/login', alert: 'Muitas tentativas de login, o seu usuario foi bloqueado por 10 minutos. Tente novamente em breve.'
         return
       end
