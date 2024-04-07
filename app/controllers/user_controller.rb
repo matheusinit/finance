@@ -1,5 +1,9 @@
 class UserController < ApplicationController
   def create
+    if params[:name] == nil or params[:email] == nil or params[:password] == nil
+      return
+    end
+
     if params[:password] != params[:password_confirmation]
       redirect_to '/user/new', alert: 'Passwords do not match'
       return
@@ -10,7 +14,14 @@ class UserController < ApplicationController
     user.name = params[:name]
     user.email = params[:email]
     user.password = params[:password]
+
     user.save
+
+    account = Account.new
+    account.id = SecureRandom.uuid
+    account.user_id = user.id
+
+    account.save
   end
 
   def login
@@ -52,6 +63,7 @@ class UserController < ApplicationController
       raise ArgumentError.new("Object user must be of Class User")
     end
 
-    user.increment!(:login_attempts)
+    account = Account.find_by(user_id: user.id)
+    account.increment!(:login_attempts)
   end
 end
