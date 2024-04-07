@@ -39,13 +39,30 @@ class UserController < ApplicationController
       return
     end
 
-    user = User.find_by(email: params[:email])
-
     is_blank_password = (params[:password] != nil and params[:password].blank?)
 
     if is_blank_password
       redirect_to '/login', alert: 'Senha não informada'
       return
+    end
+
+    user = User.find_by(email: params[:email])
+
+    account = Account.new
+    
+    if user
+      account = Account.find_by(user_id: user.id)
+    end
+
+    if account && account.login_attempts >= 3 and account.updated_at > 10.minutes.ago
+      logger.debug "Too many login attempts: #{account}"
+      redirect_to '/login', alert: 'Muitas tentativas de login, o seu usuario foi bloqueado por 10 minutos. Tente novamente em breve.'
+      return
+    end
+
+    if params[:password] and account and account.updated_at <= 10.minutes.ago
+      account.login_attempts = 0
+      account.save
     end
 
     if user && user.authenticate(params[:password])
@@ -65,5 +82,6 @@ class UserController < ApplicationController
 
     account = Account.find_by(user_id: user.id)
     account.increment!(:login_attempts)
+    account.touch
   end
 end
