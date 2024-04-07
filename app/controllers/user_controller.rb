@@ -48,11 +48,7 @@ class UserController < ApplicationController
 
     user = User.find_by(email: params[:email])
 
-    account = Account.new 
-
-    if user
-      account = Account.find_by(user_id: user.id)
-    end
+    account = user ? Account.find_by(user_id: user.id) : nil
 
     if user && user.authenticate(params[:password])
       redirect_to '/'
