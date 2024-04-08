@@ -81,7 +81,10 @@ class UserController < ApplicationController
 
     account = Account.find_by(user_id: user.id)
     account.increment!(:login_attempts)
-    if account.login_attempts <= 3
+
+    maximum_login_attempts = 3
+
+    if account.login_attempts <= maximum_login_attempts 
       account.touch
     end
   end
@@ -96,7 +99,9 @@ class UserController < ApplicationController
     account = Account.find_by(user_id: user.id)
     account.updated_at > login_block_time.ago
 
-    return account && account.login_attempts >= 3 && account.updated_at > login_block_time.ago
+    maximum_login_attempts = 3
+
+    return account && account.login_attempts >= maximum_login_attempts && account.updated_at > login_block_time.ago
   end
 
   def reset_login_attempts(user)
