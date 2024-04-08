@@ -26,8 +26,9 @@ class UserController < ApplicationController
 
   def login
     is_email_blank = params[:email].blank?
+    is_email_nil = params[:email] == nil
 
-    if params[:email] != nil and is_email_blank
+    if !is_email_nil and is_email_blank
       redirect_to '/login', alert: 'Endereço de e-mail não informado'
       return
     end
