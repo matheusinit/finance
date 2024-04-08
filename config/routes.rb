@@ -7,6 +7,12 @@ Rails.application.routes.draw do
 
   get "/user/new", to: 'user#create', as: :signup
   get "/login", to: 'user#login', as: :login
+  get "/expense", to: 'expense#list', as: :expense_list
+<<<<<<< Updated upstream
+=======
+  post '/expense', to: 'expense#create', as: :create_expense
+  get '/logout', to: 'user#destroy_session'
+>>>>>>> Stashed changes
   # Defines the root path route ("/")
   # root "posts#index"
 end
