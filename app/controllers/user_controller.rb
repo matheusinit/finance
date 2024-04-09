@@ -1,4 +1,5 @@
 class UserController < ApplicationController
+  skip_before_action :require_login, only: [:create, :login]
   def create
     if params[:name] == nil or params[:email] == nil or params[:password] == nil
       return
@@ -52,7 +53,8 @@ class UserController < ApplicationController
     account = user ? Account.find_by(user_id: user.id) : nil
 
     if user && user.authenticate(params[:password])
-      redirect_to '/'
+      session[:current_user_id] = user.id
+      redirect_to '/expense'
     elsif not is_email_blank and not is_password_blank
       login_block_time = 10.minutes
 
@@ -70,6 +72,12 @@ class UserController < ApplicationController
 
       redirect_to '/login', alert: 'Credenciais inválidas'
     end
+  end
+
+  def destroy_session
+    session.delete(:current_user_id)
+
+    redirect_to '/login'
   end
 
   private
