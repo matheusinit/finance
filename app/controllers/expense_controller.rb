@@ -10,6 +10,6 @@ class ExpenseController < ApplicationController
 
     expense.save
 
-    render :expense_list
+    render :list
   end
 end
