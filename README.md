@@ -3,7 +3,13 @@
 [![forthebadge](http://forthebadge.com/images/badges/made-with-ruby.svg)](http://forthebadge.com)
 [![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
 
+<table>
+<tr>
+<td>
 Finance é uma aplicação web desenvolvida em Ruby on Rails voltada para o gerenciamento de despesas. Através dela, os usuários podem adicionar e monitorar suas despesas mensais, proporcionando uma visão clara e organizada de seus gastos ao longo do tempo. Além disso, a aplicação oferece a funcionalidade de comparar os gastos e rendimentos de diferentes meses por meio de gráficos intuitivos, permitindo uma análise mais detalhada e facilitando o planejamento financeiro pessoal.
+</td>
+</tr>
+</table>
 
 ## 👨‍💻 Tecnologias
 
