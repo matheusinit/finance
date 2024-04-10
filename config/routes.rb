@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get "/login", to: 'user#login', as: :login
   get "/expense", to: 'expense#list', as: :expense_list
   post '/expense', to: 'expense#create', as: :create_expense
+  get '/logout', to: 'user#destroy_session'
   # Defines the root path route ("/")
   # root "posts#index"
 end

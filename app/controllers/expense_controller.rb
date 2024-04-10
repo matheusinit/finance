@@ -1,8 +1,5 @@
 class ExpenseController < ApplicationController
   def list
-<<<<<<< Updated upstream
-
-=======
   end
 
   def create
@@ -14,6 +11,5 @@ class ExpenseController < ApplicationController
     expense.save
 
     render :expense_list
->>>>>>> Stashed changes
   end
 end
