@@ -1,5 +1,7 @@
 class ExpenseController < ApplicationController
   def list
+    @expenses = Expense.all
+
     expense_count = Expense.count
 
     @exists_expense = expense_count > 0
