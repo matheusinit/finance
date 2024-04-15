@@ -55,7 +55,7 @@ class UserController < ApplicationController
 
     if user && user.authenticate(params[:password])
       session[:current_user_id] = user.id
-      redirect_to "/expense"
+      redirect_to "/receipt"
     elsif not is_email_blank and not is_password_blank
       login_block_time = 10.minutes
 

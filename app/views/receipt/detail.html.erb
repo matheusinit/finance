@@ -4,17 +4,17 @@
       Despesa de
     </div>
     <div class="text-purple-700">
-      <%= l(@expense.created_at, format: "%B de %Y") %>
+      <%= l(@receipt.created_at, format: "%B de %Y") %>
     </div>
   </h2>
 
   <div class="mt-20 border border-gray-100 py-2 px-3 rounded-sm space-y-6">
     <div>
       <h3 class="text-xl text-gray-800 tracking-tight">
-        <%= @expense.name %>
+        <%= @receipt.name %>
       </h3>
 
-      <small class="text-gray-600 text-sm italic">Atualizado em <%= l(@expense.created_at, format: "%d de %B de %Y") %></small>
+      <small class="text-gray-600 text-sm italic">Atualizado em <%= l(@receipt.created_at, format: "%d de %B de %Y") %></small>
     </div>
 
     <div>
