@@ -7,6 +7,10 @@ class ExpenseController < ApplicationController
     @exists_expense = expense_count > 0
   end
 
+  def detail
+    @expense = Expense.find(params[:id])
+  end
+
   def create
     expense = Expense.new
     expense.id = SecureRandom.uuid

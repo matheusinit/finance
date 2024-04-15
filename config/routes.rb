@@ -7,7 +7,10 @@ Rails.application.routes.draw do
 
   get "/user/new", to: 'user#create', as: :signup
   get "/login", to: 'user#login', as: :login
-  get "/expense", to: 'expense#list', as: :expense_list
-  post '/expense', to: 'expense#create', as: :create_expense
   get '/logout', to: 'user#destroy_session'
+
+
+  get "/expense", to: 'expense#list', as: :expense_list
+  get "/expense/:id", to: 'expense#detail', as: :expense_detail
+  post '/expense', to: 'expense#create', as: :create_expense
 end

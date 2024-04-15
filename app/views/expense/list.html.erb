@@ -1,13 +1,13 @@
-<div class="max-w-screen-lg mx-auto">
-  <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-800">
+<div class="mx-auto max-w-screen-lg">
+  <h2 class="mt-10 text-2xl font-bold tracking-tight leading-9 text-center text-gray-800">
     <div class="inline-block text-gray-700">Crie a primeira</div> 
     <div class="inline-block text-purple-600">lista de despesas</div>
   </h2>
 
   <% if not @exists_expense %>
     <form accept-charset="UTF-8" action="/expense" method="post">
-      <div class="mx-auto sm:w-full max-w-xl">
-        <button type="submit" class="mt-12 mx-auto flex items-center space-x-2 justify-center rounded-md border border-purple-700 fill-purple-700 text-purple-700 px-3 py-1.5 hover:bg-purple-700 hover:text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800">
+      <div class="mx-auto max-w-xl sm:w-full">
+        <button type="submit" class="flex justify-center items-center py-1.5 px-3 mx-auto mt-12 space-x-2 text-purple-700 rounded-md border border-purple-700 shadow-sm hover:text-white hover:bg-purple-700 fill-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
             <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
           </svg>
@@ -19,14 +19,18 @@
   <% else %>
     <div class="mt-10">
       <% @expenses.each do |expense| %>
-        <div class="border rounded-md px-3 py-4 bg-purple-100/20 border-gray-100">
-          <h4 class="font-bold text-gray-600 text-lg">
-            <%= expense.name %>
-          </h4>
+        <div class="justify-between flex items-center py-4 px-3 rounded-md border border-gray-100 bg-purple-200/40">
+          <div>
+            <h4 class="text-lg font-bold text-gray-600">
+              <%= expense.name %>
+            </h4>
 
-          <small class="italic text-sm text-gray-600">
-            <%= l(expense.updated_at, format: "%d de %B de %Y") %>
-          </small>
+            <small class="text-sm italic text-gray-600">
+              <%= l(expense.updated_at, format: "%d de %B de %Y") %>
+            </small>
+          </div>
+
+          <%= link_to "Acessar", expense_detail_path(expense), class: "rounded-md text-white text-sm px-3 py-1.5 bg-purple-700 flex hover:bg-purple-800 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800", role: "button" %>
         </div>
       <% end %>
     </div>
