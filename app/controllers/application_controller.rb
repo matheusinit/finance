@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   def require_login
     unless logged_in?
       flash[:error] = "Você deve estar autenticado para acessar"
-      redirect_to '/login'
+      redirect_to "/login"
     end
   end
 
