@@ -1,4 +1,24 @@
-<div>
-  <%= @expense[:id] %>
-  <%= @expense.name %>
+<div class="mx-auto max-w-screen-lg">
+  <h2 class="mt-10 text-2xl font-bold tracking-tight leading-9 flex space-x-1 justify-center">
+    <div class="text-gray-800">
+      Despesa de
+    </div>
+    <div class="text-purple-700">
+      <%= l(@expense.created_at, format: "%B de %Y") %>
+    </div>
+  </h2>
+
+  <div class="mt-20 border border-gray-100 py-2 px-3 rounded-sm space-y-6">
+    <div>
+      <h3 class="text-xl text-gray-800 tracking-tight">
+        <%= @expense.name %>
+      </h3>
+
+      <small class="text-gray-600 text-sm italic">Atualizado em <%= l(@expense.created_at, format: "%d de %B de %Y") %></small>
+    </div>
+
+    <div>
+      Items
+    </div>
+  </div>
 <div>
