@@ -17,9 +17,7 @@
     <form accept-charset="UTF-8" action="/receipt" method="post">
       <div class="mx-auto max-w-xl sm:w-full">
         <button type="submit" class="flex justify-center items-center py-1.5 px-3 mx-auto mt-12 space-x-2 text-purple-700 rounded-md border border-purple-700 shadow-sm hover:text-white hover:bg-purple-700 fill-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-            <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
-          </svg>
+          <%= inline_svg_tag "plus.svg", class: 'size-5' %>
 
           <div class="font-medium">Receita</div>
         </button>
