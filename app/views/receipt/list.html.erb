@@ -1,14 +1,14 @@
 <div class="mx-auto max-w-screen-lg">
   <div class="mt-10 flex flex-col">
-    <h2 class="self-center font-bold leading-9 text-2xl tracking-tight">
+    <h2 class="self-center text-2xl font-bold leading-9 tracking-tight">
       <div class="inline-block text-gray-700">Crie a primeira</div>
       <div class="inline-block text-purple-600">receita</div>
     </h2>
 
     <div class="flex justify-center">
-      <div class="p-4 rounded mt-4 flex items-center bg-purple-50">
+      <div class="mt-4 flex items-center rounded bg-purple-50 p-4">
         <%= inline_svg_tag "receipt.svg", class: 'w-16 mr-4 fill-purple-600' %>
-        <div class="text-gray-700 w-[38.75rem] text-left">Uma receita é o resultado cumulativo de todas as despesas e rendas registradas dentro de um mês específico</div>
+        <div class="w-[38.75rem] text-left text-gray-700">Uma receita é o resultado cumulativo de todas as despesas e rendas registradas dentro de um mês específico</div>
       </div>
     </div>
   </div>
@@ -16,7 +16,7 @@
   <% if not @exists_receipt %>
     <form accept-charset="UTF-8" action="/receipt" method="post">
       <div class="mx-auto max-w-xl sm:w-full">
-        <button type="submit" class="flex justify-center items-center py-1.5 px-3 mx-auto mt-12 space-x-2 text-purple-700 rounded-md border border-purple-700 shadow-sm hover:text-white hover:bg-purple-700 fill-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800">
+        <button type="submit" class="mx-auto mt-12 flex items-center justify-center space-x-2 rounded-md border border-purple-700 fill-purple-700 px-3 py-1.5 text-purple-700 shadow-sm hover:bg-purple-700 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800">
           <%= inline_svg_tag "plus.svg", class: 'size-5' %>
 
           <div class="font-medium">Receita</div>
@@ -26,7 +26,7 @@
   <% else %>
     <div class="mt-10">
       <% @receipts.each do |receipt| %>
-        <div class="justify-between flex items-center py-4 px-3 rounded-md border border-gray-100 bg-purple-200/40">
+        <div class="flex items-center justify-between rounded-md border border-gray-100 bg-purple-200/40 px-3 py-4">
           <div>
             <h4 class="text-lg font-bold text-gray-600">
               <%= receipt.name %>
