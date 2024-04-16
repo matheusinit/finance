@@ -1,0 +1,19 @@
+<header class="mx-auto flex max-w-screen-2xl items-center justify-between py-4">
+  <%= link_to do %>
+    <span class="font-bold text-purple-700">Fi</span>
+    <span class="-ml-1 font-bold text-gray-500">nance</span>
+  <% end %>
+
+  <ul class="flex space-x-2 text-gray-700 ">
+    <li class="cursor-pointer hover:text-gray-500">
+      <%= link_to "Página inicial", "/" %>
+    <li>
+
+    <li class="cursor-pointer hover:text-gray-500">
+      <%= link_to "Receitas", "/receipt" %>
+    <li>
+  </ul>
+
+  <%= link_to "Entrar", "/login", class: "rounded-md text-white text-sm px-3 py-1.5 bg-purple-700 flex hover:bg-purple-800 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800", role: "button" %>
+
+</header>
