@@ -1,8 +1,17 @@
 <div class="mx-auto max-w-screen-lg">
-  <h2 class="mt-10 text-2xl font-bold tracking-tight leading-9 text-center text-gray-800">
-    <div class="inline-block text-gray-700">Crie a primeira</div> 
-    <div class="inline-block text-purple-600">receita</div>
-  </h2>
+  <div class="mt-10 flex flex-col">
+    <h2 class="self-center font-bold leading-9 text-2xl tracking-tight">
+      <div class="inline-block text-gray-700">Crie a primeira</div>
+      <div class="inline-block text-purple-600">receita</div>
+    </h2>
+
+    <div class="flex justify-center">
+      <div class="p-4 rounded mt-4 flex items-center bg-purple-50">
+        <%= inline_svg_tag "receipt.svg", class: 'w-20 mr-4 fill-purple-600' %>
+        <div class="text-gray-700 w-[38.75rem] text-left">Uma fatura é o resultado cumulativo de todas as despesas e ganhos registrados dentro de um mês específico</div>
+      </div>
+    </div>
+  </div>
 
   <% if not @exists_receipt %>
     <form accept-charset="UTF-8" action="/receipt" method="post">
