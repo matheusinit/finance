@@ -1,4 +1,4 @@
-<header class="mx-auto flex max-w-screen-2xl items-center justify-between py-4">
+<header class="mx-auto flex max-w-screen-xl items-center justify-between py-4">
   <%= link_to '/' do %>
     <div class="text-lg flex items-center space-x-2">
       <%= inline_svg "logo.svg", class: 'fill-purple-600 size-9 stroke-2' %>
@@ -9,17 +9,33 @@
     </div>
   <% end %>
 
-  <ul class="flex items-center space-x-2 text-gray-700 ">
-    <li class="cursor-pointer hover:text-gray-500">
-      <%= link_to "Página inicial", "/" %>
-    <li>
+  <ul class="flex items-center space-x-4 text-gray-600">
+    <% if logged_in? %>
+      <% if current_path? == "/" %>
+        <li class="cursor-pointer text-purple-500">
+          <%= link_to_if session[:current_user_id].present?, "Página inicial", "/" %>
+        </li>
+      <% else %>
+        <li class="cursor-pointer hover:text-purple-500 transition-colors">
+          <%= link_to_if session[:current_user_id].present?, "Página inicial", "/" %>
+        </li>
+      <% end %>
 
-    <li class="cursor-pointer hover:text-gray-500">
-      <%= link_to "Receitas", "/receipt" %>
-    <li>
+      <% if current_path? == "/receipt" %>
+        <li class="cursor-pointer text-purple-500 transition-colors">
+          <%= link_to "Receitas", "/receipt" %>
+        </li>
+      <% else %>
+        <li class="cursor-pointer hover:text-purple-500 transition-colors">
+          <%= link_to "Receitas", "/receipt" %>
+        </li>
+      <% end %>
+    <% end %>
 
-    <li>
-      <%= link_to "Entrar", "/login", class: "rounded-md text-white text-sm px-3 py-1.5 bg-purple-700 flex hover:bg-purple-800 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800", role: "button" %>
-    </li>
+    <% unless session[:current_user_id].present? %>
+      <li>
+        <%= link_to "Entrar", "/login", class: "rounded-md text-white text-sm px-3 py-1.5 bg-purple-700 flex hover:bg-purple-800 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800", role: "button" %>
+      </li>
+    <% end %>
   </ul>
 </header>
