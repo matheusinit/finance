@@ -27,21 +27,35 @@
     </form>
   <% else %>
     <div class="mt-10">
-      <% @receipts.each do |receipt| %>
-        <div class="flex items-center justify-between rounded-md border border-gray-100 bg-purple-200/40 px-3 py-4">
-          <div>
-            <h4 class="text-lg font-bold text-gray-600">
-              <%= receipt.name %>
-            </h4>
+      <table class="w-full text-left text-gray-500">
+        <thead class="text-sm text-gray-700 bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3">Nome</th>
+            <th scope="col" class="px-6 py-3">Mês</th>
+            <th scope="col" class="px-6 py-3">Ano</th>
+            <th scope="col" class="px-6 py-3">Ganhos</th>
+            <th scope="col" class="px-6 py-3">Despesas</th>
+          </tr>
+        </thead>
+        <tbody class="text-sm">
+          <% @receipts.each do |receipt| %>
+            <tr class="bg-white border-b">
+              <th class="px-6 py-4 whitespace-nowrap font-bold text-purple-600">
+                <%= link_to receipt.name, receipt_detail_path(receipt), class: "underline" %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <%= l(receipt.created_at, format: "%B") %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <%= l(receipt.created_at, format: "%Y") %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">R$ 2000</td>
+              <td class="px-6 py-4 whitespace-nowrap">R$ 1500</td>
+            </tr>
+          <% end %>
 
-            <small class="text-sm italic text-gray-600">
-              <%= l(receipt.updated_at, format: "%d de %B de %Y") %>
-            </small>
-          </div>
-
-          <%= link_to "Acessar", receipt_detail_path(receipt), class: "rounded-md text-white text-sm px-3 py-1.5 bg-purple-700 flex hover:bg-purple-800 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800", role: "button" %>
-        </div>
-      <% end %>
+        </tbody>
+      </table>
     </div>
   <% end %>
 </div>
