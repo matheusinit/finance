@@ -1,17 +1,19 @@
 <div class="mx-auto max-w-screen-lg">
-  <div class="mt-10 flex flex-col">
-    <h2 class="self-center text-2xl font-bold leading-9 tracking-tight">
-      <div class="inline-block text-gray-700">Crie a primeira</div>
-      <div class="inline-block text-purple-600">receita</div>
-    </h2>
+  <% if not @exists_receipt %>
+    <div class="mt-10 flex flex-col">
+      <h2 class="self-center text-2xl font-bold leading-9 tracking-tight">
+        <div class="inline-block text-gray-700">Crie a primeira</div>
+        <div class="inline-block text-purple-600">receita</div>
+      </h2>
 
-    <div class="flex justify-center">
-      <div class="mt-4 flex items-center rounded bg-purple-50 p-4">
-        <%= inline_svg_tag "receipt.svg", class: 'w-16 mr-4 fill-purple-600' %>
-        <div class="w-[38.75rem] text-left text-gray-700">Uma receita é o resultado cumulativo de todas as despesas e rendas registradas dentro de um mês específico</div>
+      <div class="flex justify-center">
+        <div class="mt-4 flex items-center rounded bg-purple-50 p-4">
+          <%= inline_svg_tag "receipt.svg", class: 'w-16 mr-4 fill-purple-600' %>
+          <div class="w-[38.75rem] text-left text-gray-700">Uma receita é o resultado cumulativo de todas as despesas e rendas registradas dentro de um mês específico</div>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 
   <% if not @exists_receipt %>
     <form accept-charset="UTF-8" action="/receipt" method="post">
