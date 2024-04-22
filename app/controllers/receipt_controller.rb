@@ -14,7 +14,7 @@ class ReceiptController < ApplicationController
   def create
     receipt = Receipt.new
     receipt.id = SecureRandom.uuid
-    receipt.name = "Lista de despesa 1"
+    receipt.name = params[:name]
     receipt.user_id = session[:current_user_id]
 
     receipt.save
