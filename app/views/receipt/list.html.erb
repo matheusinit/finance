@@ -34,11 +34,11 @@
           <div class="py-1 px-2 rounded-2xl bg-purple-100 text-purple-500 font-bold inline-flex text-xs">1 item</div>
         </div>
 
-        <button class="flex items-center text-sm rounded-md bg-purple-600 text-white space-x-1 fill-white px-1.5 py-1 shadow hover:bg-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800">
-        <%= inline_svg_tag "plus.svg", class: 'size-4' %>
+        <%= link_to "/receipt/new", class: "flex items-center text-sm rounded-md bg-purple-600 text-white space-x-1 fill-white px-1.5 py-1 shadow hover:bg-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800" do %>
+          <%= inline_svg_tag "plus.svg", class: 'size-4' %>
 
           <span>Receita</span>
-        </button>
+        <% end %>
       </div>
 
       <table class="w-full text-left text-gray-500">

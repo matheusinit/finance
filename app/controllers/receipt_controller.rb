@@ -12,6 +12,10 @@ class ReceiptController < ApplicationController
   end
 
   def create
+    if params[:name] == nil || params[:name] == ""
+      return
+    end
+
     receipt = Receipt.new
     receipt.id = SecureRandom.uuid
     receipt.name = params[:name]
@@ -19,6 +23,6 @@ class ReceiptController < ApplicationController
 
     receipt.save
 
-    render :list
+    redirect_to "/receipt"
   end
 end

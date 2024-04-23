@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "/logout", to: "user#destroy_session"
 
   get "/receipt", to: "receipt#list", as: :receipt_list
-  get "/receipt/:id", to: "receipt#detail", as: :receipt_detail
   post "/receipt", to: "receipt#create", as: :create_receipt
+  get "/receipt/new", to: "receipt#create", as: :create_receipt_form
+  get "/receipt/:id", to: "receipt#detail", as: :receipt_detail
 end
