@@ -5,6 +5,7 @@ class CreateReceipts < ActiveRecord::Migration[7.1]
       t.references :user, null: false, foreign_key: true, type: :uuid
 
       t.timestamps
+      t.datetime :deleted_at, default: nil, null: true
     end
   end
 end
