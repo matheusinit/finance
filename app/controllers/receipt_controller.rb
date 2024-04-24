@@ -12,7 +12,12 @@ class ReceiptController < ApplicationController
   end
 
   def create
-    if params[:name] == nil || params[:name] == ""
+    if params[:name] == nil
+      return
+    end
+
+    if params[:name] != nil && params[:name] == ""
+      redirect_to "/receipt/new", alert: "O nome deve ser preenchido"
       return
     end
 
