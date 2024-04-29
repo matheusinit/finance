@@ -63,8 +63,10 @@ class UserController < ApplicationController
         reset_login_attempts(user)
       end
 
-      increase_login_attemps(user)
-      login_is_blocked = is_login_blocked?(user)
+      if user
+        increase_login_attemps(user)
+        login_is_blocked = is_login_blocked?(user)
+      end
 
       if login_is_blocked
         redirect_to "/login", alert: "Muitas tentativas de login, o seu usuario foi bloqueado por 10 minutos. Tente novamente em breve."
