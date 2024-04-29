@@ -8,11 +8,11 @@
     <form class="space-y-6" data-controller="password-toggle" novalidate>
       <% if flash[:alert].present? and flash[:alert] == 'Credenciais inválidas' %>
         <div class="mt-2 flex items-center space-x-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-red-700">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-red-700">
             <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
           </svg>
 
-          <div class="text-xs font-medium text-red-700">
+          <div class="text-xs text-red-700 font-medium">
             <%= flash[:alert] %>
           </div>
         </div>
@@ -20,11 +20,11 @@
 
       <% if flash[:alert].present? and flash[:alert] == 'Muitas tentativas de login, o seu usuario foi bloqueado por 10 minutos. Tente novamente em breve.' %>
         <div class="mt-2 flex items-center space-x-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-red-700">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-red-700">
             <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
           </svg>
 
-          <div class="text-xs font-medium text-red-700">
+          <div class="text-xs text-red-700 font-medium">
             <%= flash[:alert] %>
           </div>
         </div>
@@ -38,11 +38,11 @@
 
         <% if flash[:alert].present? and flash[:alert] == 'Endereço de e-mail não informado' %>
           <div class="mt-2 flex items-center space-x-1">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-red-700">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-red-700">
               <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
             </svg>
 
-            <div class="text-xs font-medium text-red-700">
+            <div class="text-xs text-red-700 font-medium">
               <%= flash[:alert] %>
             </div>
           </div>
@@ -50,11 +50,11 @@
 
         <% if flash[:alert].present? and flash[:alert] == 'Endereço de e-mail inválido' %>
           <div class="mt-2 flex items-center space-x-1">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-red-700">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-red-700">
               <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
             </svg>
 
-            <div class="text-xs font-medium text-red-700">
+            <div class="text-xs text-red-700 font-medium">
               <%= flash[:alert] %>
             </div>
           </div>
@@ -72,17 +72,17 @@
 
         <% if flash[:alert].present? and flash[:alert] == 'Senha não informada' %>
           <div class="mt-2 flex items-center space-x-1">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-red-700">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-red-700">
               <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
             </svg>
 
-            <div class="text-xs font-medium text-red-700">
+            <div class="text-xs text-red-700 font-medium">
               <%= flash[:alert] %>
             </div>
           </div>
         <% end %>
 
-        <div class="mt-2 flex items-center space-x-2">
+        <div class="flex items-center space-x-2 mt-2">
           <input type="checkbox" id="show-password" class="rounded border-gray-300 text-purple-600 focus:ring-purple-600" data-action="click->password-toggle#toggle" />
           <label class="text-sm text-gray-900" for="show-password">Mostrar senha</label>
         </div>
