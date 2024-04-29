@@ -10,17 +10,17 @@ class IncomeController < ApplicationController
     end
 
     if name == ""
-      redirect_to "/income/new", alert: "O nome deve ser preenchido"
+      redirect_to "/receipt/:id/income/new", alert: "O nome deve ser preenchido"
       return
     end
 
     if value == ""
-      redirect_to "/income/new", alert: "O valor deve ser preenchido"
+      redirect_to "/receipt/:id/income/new", alert: "O valor deve ser preenchido"
       return
     end
 
     if payment_date == ""
-      redirect_to "/income/new", alert: "A data de pagamento deve ser definida"
+      redirect_to "/receipt/:id/income/new", alert: "A data de pagamento deve ser definida"
       return
     end
 
