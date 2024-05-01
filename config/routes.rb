@@ -16,6 +16,6 @@ Rails.application.routes.draw do
   get "/receipt/new", to: "receipt#create", as: :create_receipt_form
   get "/receipt/:id", to: "receipt#detail", as: :receipt_detail
 
-  post "/income", to: "income#create", as: :create_income
+  post "/receipt/:id/income", to: "income#create", as: :create_income
   get "/receipt/:id/income/new", to: "income#create", as: :create_income_form
 end

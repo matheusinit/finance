@@ -1,6 +1,6 @@
 <div class="mx-auto max-w-screen-xl">
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form class="space-y-6" data-controller="password-toggle" novalidate method="post" action="/income">
+    <form class="space-y-6" data-controller="password-toggle" novalidate method="post" action=<%= "/receipt/#{@receipt_id}/income" %> >
       <% if flash[:alert].present? %>
         <div class="mt-2 flex items-center space-x-1">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-red-700">

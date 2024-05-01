@@ -4,23 +4,30 @@ class IncomeController < ApplicationController
     value = params[:value]
     is_monthly_recurring = params[:is_monthly_recurring]
     payment_date = params[:payment_date]
+    @receipt_id = params[:id]
+
+    does_receipt_exists = Receipt.exists?(@receipt_id)
+
+    if not does_receipt_exists
+      redirect_to "/receipt"
+    end
 
     if name == nil && value == nil && is_monthly_recurring == nil && payment_date == nil
       return
     end
 
     if name == ""
-      redirect_to "/receipt/:id/income/new", alert: "O nome deve ser preenchido"
+      redirect_to "/receipt/#{@receipt_id}/income/new", alert: "O nome deve ser preenchido"
       return
     end
 
     if value == ""
-      redirect_to "/receipt/:id/income/new", alert: "O valor deve ser preenchido"
+      redirect_to "/receipt/#{@receipt_id}/income/new", alert: "O valor deve ser preenchido"
       return
     end
 
     if payment_date == ""
-      redirect_to "/receipt/:id/income/new", alert: "A data de pagamento deve ser definida"
+      redirect_to "/receipt/#{@receipt_id}/income/new", alert: "A data de pagamento deve ser definida"
       return
     end
 
@@ -30,8 +37,10 @@ class IncomeController < ApplicationController
     income.value = value
     income.is_monthly_recurring = is_monthly_recurring == "yes" ? true : false
     income.payment_day = payment_date
-    income.receipt_id = Receipt.all.limit(1).first().id
+    income.receipt_id = @receipt_id
 
     income.save
+
+    redirect_to "/receipt/#{@receipt_id}/income/new"
   end
 end
