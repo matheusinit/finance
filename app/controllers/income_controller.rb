@@ -16,18 +16,20 @@ class IncomeController < ApplicationController
       return
     end
 
+    create_income_page_url = "/receipt/#{@receipt_id}/income/new"
+
     if name == ""
-      redirect_to "/receipt/#{@receipt_id}/income/new", alert: "O nome deve ser preenchido"
+      redirect_to create_income_page_url, alert: "O nome deve ser preenchido"
       return
     end
 
     if value == ""
-      redirect_to "/receipt/#{@receipt_id}/income/new", alert: "O valor deve ser preenchido"
+      redirect_to create_income_page_url, alert: "O valor deve ser preenchido"
       return
     end
 
     if payment_date == ""
-      redirect_to "/receipt/#{@receipt_id}/income/new", alert: "A data de pagamento deve ser definida"
+      redirect_to create_income_page_url, alert: "A data de pagamento deve ser definida"
       return
     end
 
@@ -41,6 +43,6 @@ class IncomeController < ApplicationController
 
     income.save
 
-    redirect_to "/receipt/#{@receipt_id}/income/new"
+    redirect_to create_income_page_url
   end
 end
