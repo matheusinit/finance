@@ -9,6 +9,8 @@ class ReceiptController < ApplicationController
 
   def detail
     @receipt = Receipt.find(params[:id])
+
+    @incomes = Income.where(receipt_id: params[:id])
   end
 
   def create
