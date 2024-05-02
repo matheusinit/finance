@@ -38,6 +38,7 @@ class IncomeController < ApplicationController
     income.name = name
     income.value = value
     income.is_monthly_recurring = is_monthly_recurring == "yes" ? true : false
+    income.is_paid = false
     income.payment_day = payment_date
     income.receipt_id = @receipt_id
 
