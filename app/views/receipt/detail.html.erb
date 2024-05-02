@@ -66,7 +66,7 @@
                 <%= income.is_monthly_recurring == true ? "Sim" : "Não" %>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <%= "Sim" %>
+                <%= income.is_paid == true ? "Sim" : "Não" %>
               </td>
             </tr>
           <% end %>
