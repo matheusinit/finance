@@ -23,7 +23,7 @@
           <span>Ganho</span>
         <% end %>
 
-        <%= link_to "/", class: "flex items-center text-sm rounded-md bg-red-600 text-white space-x-1 fill-white px-1.5 py-1 shadow hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-800" do %>
+        <%= link_to "/receipt/#{@receipt.id}/expense/new", class: "flex items-center text-sm rounded-md bg-red-600 text-white space-x-1 fill-white px-1.5 py-1 shadow hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-800" do %>
           <%= inline_svg_tag "plus.svg", class: 'size-4' %>
 
           <span>Despesa</span>

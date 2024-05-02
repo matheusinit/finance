@@ -24,6 +24,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_24_122920) do
 #   Unknown type '' for column 'id'
 
   add_foreign_key "accounts", "users"
+  add_foreign_key "expenses", "receipts"
   add_foreign_key "incomes", "receipts"
   add_foreign_key "receipts", "users"
 end
