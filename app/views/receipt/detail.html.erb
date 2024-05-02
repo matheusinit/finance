@@ -1,76 +1,87 @@
 <div class="mx-auto max-w-screen-xl">
-  <h2 class="mt-10 flex justify-center space-x-1 text-2xl font-bold leading-9 tracking-tight">
-    <div class="text-gray-800">
-      Despesa de
-    </div>
-    <div class="text-purple-700">
-      <%= l(@receipt.created_at, format: "%B de %Y") %>
-    </div>
-  </h2>
-
-  <div class="mt-10 border border-gray-200 rounded-md">
-      <div class="w-full px-6 pb-3 pt-3 flex justify-between items-center">
-        <div class="flex space-x-2 items-baseline">
-          <h4 class="font-bold text-gray-800">
-            <%= @receipt.name %>
-          </h4>
-          <div class="py-1 px-2 rounded-2xl bg-purple-100 text-purple-500 font-bold inline-flex text-xs">
-            <% if @incomes.count == 1 %>
-              <%= @incomes.count %> item
-            <% end %>
-
-            <% if @incomes.count != 1 %>
-              <%= @incomes.count %> itens
-            <% end %>
-          </div>
-        </div>
-
-        <div class="flex space-x-2">
-          <%= link_to "/receipt/#{@receipt.id}/income/new", class: "flex items-center text-sm rounded-md bg-green-600 text-white space-x-1 fill-white px-1.5 py-1 shadow hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800" do %>
-            <%= inline_svg_tag "plus.svg", class: 'size-4' %>
-
-            <span>Ganho</span>
+  <div class="mt-10 rounded-md border border-gray-200">
+    <div class="flex w-full items-center justify-between px-6 pb-3 pt-3">
+      <div class="flex items-baseline space-x-2">
+        <h4 class="font-bold text-gray-800">
+          <%= @receipt.name %>
+        </h4>
+        <div class="inline-flex rounded-2xl bg-purple-100 px-2 py-1 text-xs font-bold text-purple-500">
+          <% if @incomes.count == 1 %>
+            <%= @incomes.count %> item
           <% end %>
 
-          <%= link_to "/", class: "flex items-center text-sm rounded-md bg-red-600 text-white space-x-1 fill-white px-1.5 py-1 shadow hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-800" do %>
-            <%= inline_svg_tag "plus.svg", class: 'size-4' %>
-
-            <span>Despesa</span>
+          <% if @incomes.count != 1 %>
+            <%= @incomes.count %> itens
           <% end %>
         </div>
       </div>
+    
+      <div class="flex space-x-2">
+        <%= link_to "/receipt/#{@receipt.id}/income/new", class: "flex items-center text-sm rounded-md bg-green-600 text-white space-x-1 fill-white px-1.5 py-1 shadow hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800" do %>
+          <%= inline_svg_tag "plus.svg", class: 'size-4' %>
 
-      <table class="w-full text-left text-gray-500">
-        <thead class="text-sm bg-gray-50 border-y border-y-gray-200">
-          <tr>
-            <th scope="col" class="px-6 py-3">Nome</th>
-            <th scope="col" class="px-6 py-3">Tipo</th>
-            <th scope="col" class="px-6 py-3">Valor</th>
-            <th scope="col" class="px-6 py-3">Recorrente mensalmente</th>
-            <th scope="col" class="px-6 py-3">Pago</th>
-          </tr>
-        </thead>
-        <tbody class="text-sm text-gray-700">
-          <% @incomes.each do |income| %>
-            <tr class="bg-transparent border-b last:border-0">
-              <td class="px-6 py-4 whitespace-nowrap font-bold">
-                <%= income.name %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                Despesa
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                R$ <%= income.value %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <%= income.is_monthly_recurring == true ? "Sim" : "Não" %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <%= income.is_paid == true ? "Sim" : "Não" %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+          <span>Ganho</span>
+        <% end %>
+
+        <%= link_to "/", class: "flex items-center text-sm rounded-md bg-red-600 text-white space-x-1 fill-white px-1.5 py-1 shadow hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-800" do %>
+          <%= inline_svg_tag "plus.svg", class: 'size-4' %>
+
+          <span>Despesa</span>
+        <% end %>
+      </div>
     </div>
+    
+    <div class="flex flex-col space-y-1 border-t px-6 pb-3 pt-3">
+      <div class="text-sm text-gray-700">
+        <span class="font-semibold text-gray-600">
+          Mês/Ano: 
+        </span>
+        <span>
+          <%= l(@receipt.created_at, format: "%B/%Y") %>
+        </span>
+      </div>
+
+      <div class="text-sm text-gray-700">
+        <span class="font-semibold text-gray-600">
+          Última atualização: 
+        </span>
+        <span>
+          <%= l(@receipt.created_at, format: "%d/%m/%Y") %>
+        </span>
+      </div>
+    </div>
+
+    <table class="w-full text-left text-gray-500">
+      <thead class="border-y border-y-gray-200 bg-gray-50 text-sm">
+        <tr>
+          <th scope="col" class="px-6 py-3">Nome</th>
+          <th scope="col" class="px-6 py-3">Tipo</th>
+          <th scope="col" class="px-6 py-3">Valor</th>
+          <th scope="col" class="px-6 py-3">Recorrente mensalmente</th>
+          <th scope="col" class="px-6 py-3">Pago</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm text-gray-700">
+        <% @incomes.each do |income| %>
+          <tr class="border-b bg-transparent last:border-0">
+            <td class="whitespace-nowrap px-6 py-4 font-bold">
+              <%= income.name %>
+            </td>
+            <td class="whitespace-nowrap px-6 py-4">
+              Ganho 
+            </td>
+            <td class="whitespace-nowrap px-6 py-4">
+              R$ <%= income.value %>
+            </td>
+            <td class="whitespace-nowrap px-6 py-4">
+              <%= income.is_monthly_recurring == true ? "Sim" : "Não" %>
+            </td>
+            <td class="whitespace-nowrap px-6 py-4">
+              <%= income.is_paid == true ? "Sim" : "Não" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <div>
