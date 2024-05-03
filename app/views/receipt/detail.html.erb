@@ -83,5 +83,38 @@
         <% end %>
       </tbody>
     </table>
+
+    <table class="w-full text-left text-gray-500">
+      <thead class="border-y border-y-gray-200 bg-gray-50 text-sm">
+        <tr>
+          <th scope="col" class="px-6 py-3">Nome</th>
+          <th scope="col" class="px-6 py-3">Tipo</th>
+          <th scope="col" class="px-6 py-3">Valor</th>
+          <th scope="col" class="px-6 py-3">Parcelas</th>
+          <th scope="col" class="px-6 py-3">Pago</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm text-gray-700">
+        <% @expenses.each do |expense| %>
+          <tr class="border-b bg-transparent last:border-0">
+            <td class="whitespace-nowrap px-6 py-4 font-bold">
+              <%= expense.name %>
+            </td>
+            <td class="whitespace-nowrap px-6 py-4">
+              Despesa
+            </td>
+            <td class="whitespace-nowrap px-6 py-4">
+              R$ <%= expense.value %>
+            </td>
+            <td class="whitespace-nowrap px-6 py-4">
+              <%= expense.installments_number %>
+            </td>
+            <td class="whitespace-nowrap px-6 py-4">
+              <%= expense.is_paid == true ? "Sim" : "Não" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 <div>
