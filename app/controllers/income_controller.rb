@@ -46,4 +46,11 @@ class IncomeController < ApplicationController
 
     redirect_to create_income_page_url
   end
+
+  def mark_as_paid
+    income = Income.find(params[:id])
+    income.is_paid = true
+
+    income.save
+  end
 end
