@@ -23,4 +23,5 @@ Rails.application.routes.draw do
   post "/receipt/:id/expense", to: "expense#create", as: :create_expense
   get "/receipt/:id/expense/new", to: "expense#create", as: :create_expense_form
   put "/expense/:id/payment", to: "expense#mark_as_paid", as: :mark_expense_as_paid
+  delete "/expense/:id", to: "expense#delete", as: :delete_expense
 end
