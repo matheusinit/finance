@@ -47,4 +47,11 @@ class ExpenseController < ApplicationController
 
     redirect_to "/receipt/#{@receipt_id}/expense/new"
   end
+
+  def mark_as_paid
+    expense = Expense.find(params[:id])
+    expense.is_paid = true
+
+    expense.save
+  end
 end
