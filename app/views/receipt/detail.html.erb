@@ -58,7 +58,8 @@
           <th scope="col" class="px-6 py-3 w-2/12">Tipo</th>
           <th scope="col" class="px-6 py-3 w-2/12">Valor</th>
           <th scope="col" class="px-6 py-3 w-2/12">Recorrente mensalmente</th>
-          <th scope="col" class="px-6 py-3 w-2/12">Pago</th>
+          <th scope="col" class="px-6 py-3 w-1/12">Pago</th>
+          <th class="pr-6 py-1 pl-1 w-1/12"></th>
         </tr>
       </thead>
       <tbody class="text-sm text-gray-700">
@@ -79,6 +80,22 @@
             <td class="whitespace-nowrap px-6 py-4">
               <%= income.is_paid == true ? "Sim" : "Não" %>
             </td>
+            <td class="pr-6 pl-1 py-1">
+              <div class="flex justify-end relative" data-controller="dropdown">
+                <button class="px-1 py-1 hover:bg-gray-100 transition rounded"  data-action="click->dropdown#toggle">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 stroke-gray-800">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+                  </svg>
+                </button>
+
+                <div class="hidden absolute right-0 top-8 mt-2 min-w-28 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" data-dropdown-target="dropdown">
+                  <div class="py-1" role="none">
+                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                    <%= button_to "Delete", "/income/#{income.id}", class: "text-left w-full text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100", method: :delete, role: "menuitem", tabindex: "-1" %>
+                  </div>
+                </div>
+              </div>
+            </td>
           </tr>
         <% end %>
       </tbody>
@@ -91,14 +108,14 @@
           <th scope="col" class="px-6 py-3 w-2/12">Tipo</th>
           <th scope="col" class="px-6 py-3 w-2/12">Valor</th>
           <th scope="col" class="px-6 py-3 w-2/12">Parcelas</th>
-          <th scope="col" class="px-6 py-3 w-2/12">Pago</th>
+          <th scope="col" class="px-6 py-3 w-1/12">Pago</th>
+          <th class="pr-6 py-1 pl-1 w-1/12"></th>
         </tr>
       </thead>
       <tbody class="text-sm text-gray-700">
         <% @expenses.each do |expense| %>
           <tr class="border-b bg-transparent last:border-0">
             <td class="whitespace-nowrap px-6 py-4 font-bold">
-              <%= button_to "Delete", "/expense/#{expense.id}", method: :delete %>
               <%= expense.name %>
             </td>
             <td class="whitespace-nowrap px-6 py-4">
@@ -112,6 +129,21 @@
             </td>
             <td class="whitespace-nowrap px-6 py-4">
               <%= expense.is_paid == true ? "Sim" : "Não" %>
+            </td>
+            <td class="pr-6 pl-1 py-1">
+              <div class="flex justify-end relative" data-controller="dropdown">
+                <button class="px-1 py-1 hover:bg-gray-100 transition rounded" data-action="click->dropdown#toggle">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 stroke-gray-800">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+                  </svg>
+                </button>
+
+                <div class="hidden absolute right-0 top-8 mt-2 min-w-28 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" data-dropdown-target="dropdown">
+                  <div class="py-1" role="none">
+                    <%= button_to "Delete", "/expense/#{expense.id}", class: "text-left w-full text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100", method: :delete, role: "menuitem", tabindex: "-1" %>
+                  </div>
+                </div>
+              </div>
             </td>
           </tr>
         <% end %>
