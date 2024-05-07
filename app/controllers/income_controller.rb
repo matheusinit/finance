@@ -53,4 +53,8 @@ class IncomeController < ApplicationController
 
     income.save
   end
+
+  def delete
+    Income.find(params[:id]).destroy
+  end
 end
