@@ -70,8 +70,8 @@
     </div>
 
     <% if @incomes.count > 0 %>
-      <%= render "components/table" do %>
-        <%= render "components/table_header" do %>
+      <%= render "components/table/self" do %>
+        <%= render "components/table/table_header" do %>
           <th scope="col" class="px-6 py-3 w-4/12">Nome</th>
           <th scope="col" class="px-6 py-3 w-2/12">Tipo</th>
           <th scope="col" class="px-6 py-3 w-2/12">Valor</th>
@@ -79,26 +79,26 @@
           <th scope="col" class="px-6 py-3 w-1/12">Pago</th>
           <th class="pr-6 py-1 pl-1 w-1/12"></th>
         <% end %>
-        <%= render "components/table_body" do %>
+        <%= render "components/table/table_body" do %>
           <% @incomes.each do |income| %>
-            <%= render "components/table_item" do %>
-              <%= render "components/table_cell" do %>
+            <%= render "components/table/table_item" do %>
+              <%= render "components/table/table_cell" do %>
                 <%= income.name %>
               <% end %>
 
-              <%= render "components/table_cell" do %>
+              <%= render "components/table/table_cell" do %>
                 Ganho
               <% end %>
 
-              <%= render "components/table_cell" do %>
+              <%= render "components/table/table_cell" do %>
                 R$ <%= income.value %>
               <% end %>
 
-              <%= render "components/table_cell" do %>
+              <%= render "components/table/table_cell" do %>
                 <%= income.is_monthly_recurring == true ? "Sim" : "Não" %>
               <% end %>
 
-              <%= render "components/table_cell" do %>
+              <%= render "components/table/table_cell" do %>
                 <%= income.is_paid == true ? "Sim" : "Não" %>
               <% end %>
 
@@ -122,8 +122,8 @@
     <% end %>
 
     <% if @expenses.count > 0 %>
-      <%= render "components/table" do %>
-        <%= render "components/table_header" do %>
+      <%= render "components/table/self" do %>
+        <%= render "components/table/table_header" do %>
           <th scope="col" class="px-6 py-3 w-4/12">Nome</th>
           <th scope="col" class="px-6 py-3 w-2/12">Tipo</th>
           <th scope="col" class="px-6 py-3 w-2/12">Valor</th>
@@ -131,26 +131,26 @@
           <th scope="col" class="px-6 py-3 w-1/12">Pago</th>
           <th class="pr-6 py-1 pl-1 w-1/12"></th>
         <% end %>
-        <%= render "components/table_body" do %>
+        <%= render "components/table/table_body" do %>
           <% @expenses.each do |expense| %>
-            <%= render "components/table_item" do %>
-              <%= render "components/table_cell" do %>
+            <%= render "components/table/table_item" do %>
+              <%= render "components/table/table_cell" do %>
                 <%= expense.name %>
               <% end %>
 
-              <%= render "components/table_cell" do %>
+              <%= render "components/table/table_cell" do %>
                 Despesa
               <% end %>
 
-              <%= render "components/table_cell" do %>
+              <%= render "components/table/table_cell" do %>
                 R$ <%= expense.value %>
               <% end %>
 
-              <%= render "components/table_cell" do %>
+              <%= render "components/table/table_cell" do %>
                 <%= expense.installments_number %>
               <% end %>
 
-              <%= render "components/table_cell" do %>
+              <%= render "components/table/table_cell" do %>
                 <%= expense.is_paid == true ? "Sim" : "Não" %>
               <% end %>
 
