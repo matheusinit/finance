@@ -31,7 +31,7 @@
       </div>
     </div>
     
-    <div class="flex flex-col space-y-1 border-t px-6 pb-3 pt-3">
+    <div class="flex flex-col space-y-1 border-t border-b px-6 pb-3 pt-3">
       <div class="text-sm text-gray-700">
         <span class="font-semibold text-gray-600">
           Mês/Ano: 
@@ -69,12 +69,24 @@
       <% end %>
     </div>
 
-    <% if @incomes.count > 0 %>
-      <%= render "partials/income_table", collection: @incomes %>
-    <% end %>
+    <div class="px-6 pb-3 pt-3">
+      <div class="flex flex-col space-y-4">
+        <h3 class="text-gray-700 font-semibold text-sm">Ganhos</h3>
 
-    <% if @expenses.count > 0 %>
-      <%= render "partials/expense_table", collection: @expenses %>
-    <% end %>
+        <% if @incomes.count > 0 %>
+          <%= render "partials/income_table", collection: @incomes %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="px-6 py-3">
+      <div class="flex flex-col space-y-4">
+        <h3 class="text-gray-700 font-semibold text-sm">Despesas</h3>
+
+        <% if @expenses.count > 0 %>
+          <%= render "partials/expense_table", collection: @expenses %>
+        <% end %>
+      </div>
+    </div>
   </div>
 <div>
