@@ -47,6 +47,39 @@ class IncomeController < ApplicationController
     redirect_to create_income_page_url
   end
 
+  def edit
+    @income = Income.find(params[:id])
+
+    name = params[:name]
+    value = params[:value]
+    is_monthly_recurring = params[:is_monthly_recurring]
+    payment_day = params[:payment_date]
+
+    if name == nil && value == nil && is_monthly_recurring == nil && payment_day == nil
+      return
+    end
+
+    if name != nil || name != ""
+      @income.name = name
+    end
+
+    if value != nil || value != 0
+      @income.value = value
+    end
+
+    if is_monthly_recurring != nil || is_monthly_recurring != @income.is_monthly_recurring
+      @income.is_monthly_recurring = is_monthly_recurring
+    end
+
+    if payment_day != nil || (payment_day != nil && payment_day >= 1 && payment_day <= 31)
+      @income.payment_day = payment_day
+    end
+
+    @income.save
+
+    redirect_to "/receipt/#{@income.receipt_id}"
+  end
+
   def mark_as_paid
     income = Income.find(params[:id])
     income.is_paid = true
