@@ -48,6 +48,40 @@ class ExpenseController < ApplicationController
     redirect_to "/receipt/#{@receipt_id}/expense/new"
   end
 
+  def edit
+    @expense = Expense.find(params[:id])
+
+    name = params[:name]
+    value = params[:value]
+    installments_number = params[:installments_number]
+    payment_day = params[:payment_date]
+
+    if name == nil && value == nil && installments_number == nil && payment_day == nil
+      return
+    end
+    if name != nil || name != ""
+      @expense.name = name
+    end
+
+    if value != nil || value != 0
+      @expense.value = value
+    end
+
+    if installments_number != nil || (installments_number != nil && installments_number >= 1)
+      @expense.installments_number = installments_number
+    end
+
+    logger.debug payment_day
+
+    if payment_day != nil || (payment_day != nil && payment_day >= 1 && payment_day <= 31)
+      @expense.payment_day = payment_day
+    end
+
+    @expense.save
+
+    redirect_to "/receipt/#{@expense.receipt_id}"
+  end
+
   def delete
     Expense.find(params[:id]).destroy
   end
