@@ -71,8 +71,6 @@ class ExpenseController < ApplicationController
       @expense.installments_number = installments_number
     end
 
-    logger.debug payment_day
-
     if payment_day != nil || (payment_day != nil && payment_day >= 1 && payment_day <= 31)
       @expense.payment_day = payment_day
     end
