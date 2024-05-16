@@ -10,8 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_24_122920) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_02_211655) do
 # Could not dump table "accounts" because of following StandardError
+#   Unknown type 'uuid' for column 'id'
+
+# Could not dump table "expenses" because of following StandardError
 #   Unknown type 'uuid' for column 'id'
 
 # Could not dump table "incomes" because of following StandardError
