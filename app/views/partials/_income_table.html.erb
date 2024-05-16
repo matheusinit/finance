@@ -45,21 +45,21 @@
                   <% end %>
                 </div>
               <% end %>
+              
+                <div class="py-1" role="none">
+                  <%= button_to "/income/#{income.id}/edit", class: "flex space-x-1 items-center text-left w-full text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100", method: :get, role: "menuitem", tabindex: "-1" do %>
+                    <%= inline_svg "edit.svg", class: 'w-5 h-5 stroke-blue-600' %>
+                    <span>Editar</span>
+                  <% end %>
+                </div>
 
-              <div class="py-1" role="none">
-                <%= button_to "/income/#{income.id}/edit", class: "flex space-x-1 items-center text-left w-full text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100", method: :get, role: "menuitem", tabindex: "-1" do %>
-                  <%= inline_svg "edit.svg", class: 'w-5 h-5 stroke-blue-600' %>
-                  <span>Editar</span>
-                <% end %>
-              </div>
+                <div class="py-1" role="none">
+                  <%= button_to income_path(income), method: :delete, class: "flex space-x-1 items-center text-left w-full text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100", role: "menuitem", tabindex: "-1" do %>
+                    <%= inline_svg "trash.svg", class: 'w-5 h-5 stroke-red-600' %>
 
-              <div class="py-1" role="none">
-                <%= button_to "/income/#{income.id}", class: "flex space-x-1 items-center text-left w-full text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100", method: :delete, role: "menuitem", tabindex: "-1" do %>
-                  <%= inline_svg "trash.svg", class: 'w-5 h-5 stroke-red-600' %>
-
-                  <span>Remover</span>
-                <% end %>
-              </div>
+                    <span>Remover</span>
+                  <% end %>
+                </div>
             </div>
           </div>
         </td>

@@ -88,6 +88,9 @@ class IncomeController < ApplicationController
   end
 
   def delete
-    Income.find(params[:id]).destroy
+    income = Income.find(params[:id])
+    income.destroy
+
+    redirect_to "/receipt/#{income.receipt_id}"
   end
 end

@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   put "/income/:id/payment", to: "income#mark_as_paid", as: :mark_income_as_paid
   delete "/income/:id", to: "income#delete", as: :delete_income
 
+  resources :income
+
   post "/receipt/:id/expense", to: "expense#create", as: :create_expense
   get "/receipt/:id/expense/new", to: "expense#create", as: :create_expense_form
   get "/expense/:id/edit", to: "expense#edit", as: :edit_expense_form
