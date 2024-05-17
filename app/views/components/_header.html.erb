@@ -12,21 +12,29 @@
   <ul class="flex items-center space-x-4 text-gray-500 font-medium">
     <% if logged_in? %>
       <% if current_path? == "/" %>
-        <li class="cursor-pointer text-purple-700">
-          <%= link_to_if session[:current_user_id].present?, "Página inicial", "/" %>
+        <li class="relative rounded-md px-2 py-1 text-sm font-medium text-purple-500 transition-colors duration-300 focus-within:outline-purple-500/50">
+          <%= link_to "Página inicial", "/" %>
+
+          <div class="absolute left-0 top-0 flex size-full h-full w-full items-end justify-center">
+            <span class="z-0 h-[3px] w-[60%] rounded-t-full bg-purple-500"></span>
+          </div>
         </li>
       <% else %>
-        <li class="cursor-pointer hover:text-purple-700 transition-colors">
-          <%= link_to_if session[:current_user_id].present?, "Página inicial", "/" %>
+        <li class="relative rounded-md px-2 py-1 text-sm font-medium text-gray-500 transition-colors duration-300 focus-within:outline-purple-500/50">
+          <%= link_to "Página inicial", "/" %>
         </li>
       <% end %>
 
       <% if current_path? == "/receipt" %>
-        <li class="cursor-pointer text-purple-700 transition-colors">
+        <li class="relative rounded-md px-2 py-1 text-sm font-medium text-purple-500 transition-colors duration-300 focus-within:outline-purple-500/50">
           <%= link_to "Receitas", "/receipt" %>
+
+          <div class="absolute left-0 top-0 flex size-full h-full w-full items-end justify-center">
+            <span class="z-0 h-[3px] w-[60%] rounded-t-full bg-purple-500"></span>
+          </div>
         </li>
       <% else %>
-        <li class="cursor-pointer hover:text-purple-700 transition-colors">
+        <li class="relative rounded-md px-2 py-1 text-sm font-medium text-gray-500 transition-colors duration-300 focus-within:outline-purple-500/50">
           <%= link_to "Receitas", "/receipt" %>
         </li>
       <% end %>
