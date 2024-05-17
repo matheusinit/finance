@@ -19,10 +19,10 @@
     <form accept-charset="UTF-8" action="/receipt" method="post">
       <div class="mx-auto max-w-xl sm:w-full">
         <input type="text" name="name" value="Lista de despesa 1" hidden />
-        <button type="submit" class="mx-auto mt-12 flex items-center justify-center space-x-2 rounded-md bg-purple-600 fill-white px-3 py-1.5 text-white shadow-sm hover:bg-purple-700 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800">
-          <%= inline_svg_tag "plus.svg", class: 'size-5' %>
+        <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-purple-500 text-gray-50 hover:bg-purple-500/90 px-4 py-2">
+          <%= inline_svg_tag "plus.svg", class: 'mr-2 h-6 w-6' %>
 
-          <div class="font-medium">Receita</div>
+          <span>Receita</span>
         </button>
       </div>
     </form>
@@ -42,8 +42,8 @@
           </div>
         </div>
 
-        <%= link_to "/receipt/new", class: "flex items-center text-sm rounded-md bg-purple-600 text-white space-x-1 fill-white px-1.5 py-1 shadow hover:bg-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800" do %>
-          <%= inline_svg_tag "plus.svg", class: 'size-4' %>
+        <%= link_to "/receipt/new", class: "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-purple-500 text-gray-50 hover:bg-purple-500/90 px-4 py-2" do %>
+          <%= inline_svg_tag "plus.svg", class: 'mr-2 size-5' %>
 
           <span>Receita</span>
         <% end %>
