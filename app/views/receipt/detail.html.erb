@@ -71,7 +71,7 @@
 
     <div class="px-6 pb-3 pt-3">
       <div class="flex flex-col space-y-4">
-        <h3 class="text-gray-700 font-semibold text-sm">Ganhos</h3>
+        <h3 class="text-gray-700 font-semibold text-sm">Ganhos (<%= @incomes.count %>)</h3>
 
         <% if @incomes.count > 0 %>
           <%= render "partials/income_table", collection: @incomes %>
@@ -81,7 +81,7 @@
 
     <div class="px-6 py-3">
       <div class="flex flex-col space-y-4">
-        <h3 class="text-gray-700 font-semibold text-sm">Despesas</h3>
+        <h3 class="text-gray-800 font-semibold text-sm">Despesas (<%= @expenses.count %>)</h3>
 
         <% if @expenses.count > 0 %>
           <%= render "partials/expense_table", collection: @expenses %>
