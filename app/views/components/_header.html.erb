@@ -11,7 +11,7 @@
 
   <ul class="flex items-center space-x-4">
     <% if logged_in? %>
-      <div class="text-gray-500 flex-wrap border-b border-black-500/40 px-4">
+      <div class="text-gray-500 flex-wrap border-b border-black-500/40 px-4 flex">
         <% if current_path? == "/" %>
           <li class="relative rounded-md px-2 py-1 text-sm font-medium text-purple-500 transition-colors duration-300 focus-within:outline-purple-500/50">
             <%= link_to "Página inicial", "/" %>
