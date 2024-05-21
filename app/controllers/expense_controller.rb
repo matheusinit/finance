@@ -7,6 +7,8 @@ class ExpenseController < ApplicationController
 
     @receipt_id = params[:id]
 
+    @receipt_name = Receipt.find(@receipt_id).name
+
     does_receipt_exists = Receipt.exists?(@receipt_id)
 
     if not does_receipt_exists
@@ -50,6 +52,9 @@ class ExpenseController < ApplicationController
 
   def edit
     @expense = Expense.find(params[:id])
+    @receipt_id = @expense[:receipt_id]
+
+    @receipt_name = Receipt.find(@expense[:receipt_id]).name
 
     name = params[:name]
     value = params[:value]

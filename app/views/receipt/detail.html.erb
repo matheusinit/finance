@@ -1,5 +1,11 @@
 <div class="mx-auto max-w-screen-xl">
   <%= render "/components/breadcrumb/self" do %>
+    <%= render "/components/breadcrumb/link", link: "/" do %>
+      Início 
+    <% end %>
+
+    <%= render "/components/breadcrumb/separator" %>
+
     <%= render "/components/breadcrumb/link", link: "/receipt/" do %>
       Receitas
     <% end %>

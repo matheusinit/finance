@@ -6,6 +6,8 @@ class IncomeController < ApplicationController
     payment_date = params[:payment_date]
     @receipt_id = params[:id]
 
+    @receipt_name = Receipt.find(@receipt_id).name
+
     does_receipt_exists = Receipt.exists?(@receipt_id)
 
     if not does_receipt_exists
@@ -49,6 +51,9 @@ class IncomeController < ApplicationController
 
   def edit
     @income = Income.find(params[:id])
+    @receipt_id = @income[:receipt_id]
+
+    @receipt_name = Receipt.find(@income[:receipt_id]).name
 
     name = params[:name]
     value = params[:value]

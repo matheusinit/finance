@@ -1,4 +1,28 @@
 <div class="mx-auto max-w-screen-xl">
+  <%= render "/components/breadcrumb/self" do %>
+    <%= render "/components/breadcrumb/link", link: "/" do %>
+      Início
+    <% end %>
+
+    <%= render "/components/breadcrumb/separator" %>
+
+    <%= render "/components/breadcrumb/link", link: "/receipt/" do %>
+      Receitas
+    <% end %>
+
+    <%= render "/components/breadcrumb/separator" %>
+
+    <%= render "/components/breadcrumb/link", link: "/receipt/#{@receipt_id}" do %>
+      <%= @receipt_name %>
+    <% end %>
+
+    <%= render "/components/breadcrumb/separator" %>
+
+    <%= render "/components/breadcrumb/current" do %>
+      Editar ganho
+    <% end %>
+  <% end %>
+  
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
     <form class="space-y-6" data-controller="password-toggle" novalidate method="put" action=<%= "/income/#{@income.id}/edit" %> >
       <div>
