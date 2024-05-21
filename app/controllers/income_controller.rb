@@ -85,6 +85,13 @@ class IncomeController < ApplicationController
     redirect_to "/receipt/#{@income.receipt_id}"
   end
 
+  def detail
+    @receipt = Receipt.find(params[:id])
+
+    @incomes = Income.where(receipt_id: params[:id])
+    @expenses = Expense.where(receipt_id: params[:id])
+  end
+
   def mark_as_paid
     income = Income.find(params[:id])
     income.is_paid = true

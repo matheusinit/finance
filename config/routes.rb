@@ -31,4 +31,7 @@ Rails.application.routes.draw do
   put "/expense/:id/edit", to: "expense#edit", as: :edit_expense
   put "/expense/:id/payment", to: "expense#mark_as_paid", as: :mark_expense_as_paid
   delete "/expense/:id", to: "expense#delete", as: :delete_expense
+
+  get "/receipt/:id/expense", to: "expense#detail", as: :expense_table
+  get "/receipt/:id/income", to: "income#detail", as: :income_table
 end

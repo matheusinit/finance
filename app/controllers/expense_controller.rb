@@ -85,6 +85,13 @@ class ExpenseController < ApplicationController
     redirect_to "/receipt/#{@expense.receipt_id}"
   end
 
+  def detail
+    @receipt = Receipt.find(params[:id])
+
+    @incomes = Income.where(receipt_id: params[:id])
+    @expenses = Expense.where(receipt_id: params[:id])
+  end
+
   def delete
     Expense.find(params[:id]).destroy
   end

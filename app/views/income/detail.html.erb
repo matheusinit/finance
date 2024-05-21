@@ -1,0 +1,111 @@
+<div class="mx-auto max-w-screen-xl">
+  <%= render "/components/breadcrumb/self" do %>
+    <%= render "/components/breadcrumb/link", link: "/" do %>
+      Início 
+    <% end %>
+
+    <%= render "/components/breadcrumb/separator" %>
+
+    <%= render "/components/breadcrumb/link", link: "/receipt/" do %>
+      Receitas
+    <% end %>
+
+    <%= render "/components/breadcrumb/separator" %>
+
+    <%= render "/components/breadcrumb/current" do %>
+      <%= @receipt.name %>
+    <% end %>
+  <% end %>
+
+  <div class="mt-10 rounded-md border border-gray-200">
+    <div class="flex w-full items-center justify-between px-6 pb-3 pt-3">
+      <div class="flex items-baseline space-x-2">
+        <h4 class="font-bold text-gray-800">
+          <%= @receipt.name %>
+        </h4>
+        <div class="inline-flex rounded-2xl bg-purple-100 px-2 py-1 text-xs font-bold text-purple-500">
+          <% if @incomes.count == 1 %>
+            <%= @incomes.count %> item
+          <% end %>
+
+          <% if @incomes.count != 1 %>
+            <%= @incomes.count %> itens
+          <% end %>
+        </div>
+      </div>
+    
+      <div class="flex space-x-2">
+        <%= link_to "/receipt/#{@receipt.id}/income/new", class: "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-green-600 text-gray-50 hover:bg-green-600/90 px-4 py-2" do %>
+          <%= inline_svg_tag "plus.svg", class: 'mr-2 size-5' %>
+
+          <span>Ganho</span>
+        <% end %>
+
+        <%= link_to "/receipt/#{@receipt.id}/expense/new", class: "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-red-500 text-gray-50 hover:bg-red-500/90 px-4 py-2" do %>
+          <%= inline_svg_tag "plus.svg", class: 'mr-2 size-5' %>
+
+          <span>Despesa</span>
+        <% end %>
+      </div>
+    </div>
+    
+    <div class="flex flex-col space-y-1 border-t border-b px-6 pb-3 pt-3">
+      <div class="text-sm text-gray-700">
+        <span class="font-semibold text-gray-600">
+          Mês/Ano: 
+        </span>
+        <span>
+          <%= l(@receipt.created_at, format: "%B/%Y") %>
+        </span>
+      </div>
+
+      <div class="text-sm text-gray-700">
+        <span class="font-semibold text-gray-600">
+          Última atualização: 
+        </span>
+        <span>
+          <%= l(@receipt.created_at, format: "%d/%m/%Y") %>
+        </span>
+      </div>
+
+      <% if @expenses.count == 0 %>
+        <div class="text-gray-700 text-sm flex items-center space-x-1">
+          <%= inline_svg "expense.svg", class: 'fill-red-600 size-5 stroke-1' %>
+          <span>
+            Não há despesas cadastradas
+          </span>
+        </div>
+      <% end %>
+
+      <% if @incomes.count == 0 %>
+        <div class="text-gray-700 text-sm flex items-center space-x-1">
+          <%= inline_svg "income.svg", class: 'fill-green-600 size-5 stroke-1' %>
+          <span>
+            Não há ganhos cadastrados
+          </span>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex items-center space-x-6 px-6 py-3">
+      <a href=<%= "/receipt/#{@receipt.id}/income" %> class="relative z-10">
+        <span class="font-medium text-sm text-gray-800">Ganhos</span>
+        <span class="px-1 py-0.5 bg-gray-100/90 text-gray-500 rounded-sm text-xs"><%= @incomes.count %></span>
+        <span class="absolute inset-0 top-[26px] z-0 rounded-md bg-purple-500 h-0.5 w-full mx-auto"></span>
+      </a>
+
+      <a href=<%= "/receipt/#{@receipt.id}/expense" %> class="relative z-10">
+        <span class="font-medium text-sm text-gray-500">Despesas</span>
+        <span class="px-1 py-0.5 bg-gray-100/90 text-gray-500 rounded-sm text-xs"><%= @expenses.count %></span>
+      </a>
+    </div>
+
+    <div class="px-6 pb-3 pt-3">
+      <div class="flex flex-col space-y-4">
+        <% if @incomes.count > 0 %>
+          <%= render "partials/income_table", collection: @incomes %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<div>
