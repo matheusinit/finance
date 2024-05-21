@@ -1,6 +1,6 @@
 <header class="mx-auto flex max-w-screen-xl items-center justify-between py-4">
-  <%= link_to '/' do %>
-    <div class="text-lg flex items-center space-x-2">
+  <%= link_to '/', class: "rounded focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none" do %>
+    <div class="text-lg flex items-center space-x-2 ">
       <%= inline_svg "logo.svg", class: 'fill-purple-500 size-8 stroke-2' %>
       <div>
         <span class="font-semibold text-purple-600 text-base">Fi</span>
@@ -14,7 +14,7 @@
       <div class="text-gray-500 flex-wrap border-b border-black-500/40 px-4 flex">
         <% if current_path? == "/" %>
           <li class="relative rounded-md px-2 py-1 text-sm font-medium text-purple-500 transition-colors duration-300 focus-within:outline-purple-500/50">
-            <%= link_to "Página inicial", "/" %>
+            <%= link_to "Página inicial", "/", class: "rounded focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none" %>
 
             <div class="absolute left-0 top-0 flex size-full h-full w-full items-end justify-center animate-fade-right duration-300">
               <span class="z-0 h-[3px] w-[50%] rounded-t-full bg-purple-500"></span>
@@ -22,13 +22,13 @@
           </li>
         <% else %>
           <li class="relative rounded-md px-2 py-1 text-sm font-medium text-gray-500 transition-colors duration-300 focus-within:outline-purple-500/50">
-            <%= link_to "Página inicial", "/" %>
+            <%= link_to "Página inicial", "/", class: "rounded focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none" %>
           </li>
         <% end %>
 
         <% if current_path? == "/receipt" %>
           <li class="relative rounded-md px-2 py-1 text-sm font-medium text-purple-500 transition-colors duration-300 focus-within:outline-purple-500/50">
-            <%= link_to "Receitas", "/receipt" %>
+            <%= link_to "Receitas", "/receipt", class: "rounded focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none" %>
 
             <div class="absolute left-0 top-0 flex size-full h-full w-full items-end justify-center animate-fade-right duration-300">
               <span class="z-0 h-[3px] w-[50%] rounded-t-full bg-purple-500"></span>
@@ -36,7 +36,7 @@
           </li>
         <% else %>
           <li class="relative rounded-md px-2 py-1 text-sm font-medium text-gray-500 transition-colors duration-300 focus-within:outline-purple-500/50">
-            <%= link_to "Receitas", "/receipt" %>
+            <%= link_to "Receitas", "/receipt", class: "rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none" %>
           </li>
         <% end %>
       </div>
@@ -44,7 +44,7 @@
 
     <% if !session[:current_user_id].present? && current_path? != "/login" %>
       <li>
-        <%= link_to "Entrar", "/login", class: "rounded-md text-white text-sm px-3 py-1.5 bg-purple-600 flex hover:bg-purple-600/90 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-800", role: "button" %>
+        <%= link_to "Entrar", "/login", class: "rounded-md text-white text-sm px-3 py-1.5 bg-purple-600 flex hover:bg-purple-600/90 shadow-sm focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none", role: "button" %>
       </li>
     <% end %>
   </ul>
