@@ -23,15 +23,6 @@
         <h4 class="font-bold text-gray-800">
           <%= @receipt.name %>
         </h4>
-        <div class="inline-flex rounded-2xl bg-purple-100 px-2 py-1 text-xs font-bold text-purple-500">
-          <% if @incomes.count == 1 %>
-            <%= @incomes.count %> item
-          <% end %>
-
-          <% if @incomes.count != 1 %>
-            <%= @incomes.count %> itens
-          <% end %>
-        </div>
       </div>
     
       <div class="flex space-x-2">
