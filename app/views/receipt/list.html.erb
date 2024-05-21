@@ -31,7 +31,7 @@
     <form accept-charset="UTF-8" action="/receipt" method="post">
       <div class="mx-auto max-w-xl sm:w-full">
         <input type="text" name="name" value="Lista de despesa 1" hidden />
-        <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-purple-500 text-gray-50 hover:bg-purple-500/90 px-4 py-2">
+        <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-purple-500 text-gray-50 hover:bg-purple-500/90 px-4 py-2">
           <%= inline_svg_tag "plus.svg", class: 'mr-2 h-6 w-6' %>
 
           <span>Receita</span>
@@ -54,7 +54,7 @@
           </div>
         </div>
 
-        <%= link_to "/receipt/new", class: "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-purple-500 text-gray-50 hover:bg-purple-500/90 px-4 py-2" do %>
+        <%= link_to "/receipt/new", class: "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-purple-500 text-gray-50 hover:bg-purple-500/90 px-4 py-2" do %>
           <%= inline_svg_tag "plus.svg", class: 'mr-2 size-5' %>
 
           <span>Receita</span>
@@ -75,7 +75,7 @@
           <% @receipts.each do |receipt| %>
             <tr class="bg-transparent border-b last:border-0">
               <th class="px-6 py-4 whitespace-nowrap font-bold text-purple-500">
-                <%= link_to receipt.name, receipt_detail_path(receipt), class: "underline" %>
+                <%= link_to receipt.name, receipt_detail_path(receipt), class: "underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none rounded-sm" %>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <%= l(receipt.created_at, format: "%B") %>
