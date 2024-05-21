@@ -22,10 +22,15 @@ module.exports = {
             opacity: '1',
             transform: 'translateX(0)',
           },
-        }
+        },
+        'logo-cloud': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(calc(-100% - 4rem))' },
+        },
       },
       animation: {
-        'fade-right': 'fade-right 400ms ease-in'
+        'fade-right': 'fade-right 400ms ease-in',
+        'logo-cloud': 'logo-cloud 30s linear infinite',
       },
       animationDelay: {
         none: '0ms',
