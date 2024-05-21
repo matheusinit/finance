@@ -87,9 +87,16 @@
       <% end %>
     </div>
 
-    <div class="px-6 pb-3 pt-3">
-      <div class="flex flex-col space-y-4">
-        <h3 class="text-gray-700 font-semibold text-sm">Ganhos (<%= @incomes.count %>)</h3>
+    <div class="px-6 pb-9 pt-3">
+      <div class="flex flex-col space-y-3">
+        <div class="flex justify-between items-center">
+          <h3 class="text-gray-700 font-semibold text-sm">
+            Ganhos
+            <span class="px-1 py-0.5 bg-gray-200/90 text-gray-600 rounded-sm text-xs"><%= @incomes.count %></span>
+          </h3>
+
+          <a role="button" href=<%= "/receipt/#{@receipt.id}/income" %> class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-white hover:bg-gray-50/90 hover:text-gray-600 h-9 px-3">Expandir</a>
+        </div>
 
         <% if @incomes.count > 0 %>
           <%= render "partials/income_table", collection: @incomes %>
@@ -99,7 +106,15 @@
 
     <div class="px-6 py-3">
       <div class="flex flex-col space-y-4">
-        <h3 class="text-gray-800 font-semibold text-sm">Despesas (<%= @expenses.count %>)</h3>
+        <div class="flex justify-between items-center">
+          <h3 class="text-gray-800 font-semibold text-sm">
+            Despesas
+            <span class="px-1 py-0.5 bg-gray-200/90 text-gray-600 rounded-sm text-xs"><%= @expenses.count %></span>
+          </h3>
+
+          <a role="button" href=<%= "/receipt/#{@receipt.id}/expense" %> class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-white hover:bg-gray-50/90 hover:text-gray-600 h-9 px-3">Expandir</a>
+
+        </div>
 
         <% if @expenses.count > 0 %>
           <%= render "partials/expense_table", collection: @expenses %>
