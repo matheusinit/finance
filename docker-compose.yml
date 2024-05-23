@@ -1,4 +1,19 @@
 services:
+  app:
+    build:
+      context: .
+      args:
+        RAILS_ENV: development
+    ports:
+      - 3000:3000
+    environment:
+      RAILS_ENV: development
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+
   database:
     image: postgres:15.7-bookworm
     restart: always
