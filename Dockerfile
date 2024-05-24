@@ -33,6 +33,11 @@ RUN bundle install && \
 # Copy application code
 COPY . .
 
+RUN apt-get update -qq && \
+    apt-get install nodejs npm -y --no-install-recommends
+
+RUN npm i -g yarn
+
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
