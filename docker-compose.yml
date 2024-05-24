@@ -7,12 +7,13 @@ services:
     ports:
       - 3000:3000
     environment:
-      RAILS_ENV: development
+      RAILS_ENV: production 
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_PORT: ${POSTGRES_PORT}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
 
   database:
     image: postgres:15.7-bookworm
