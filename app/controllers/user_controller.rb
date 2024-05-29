@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  skip_before_action :require_login, only: [:create, :login, :signup]
+  skip_before_action :require_login, only: [:create, :login]
   # skip_before_action :verify_authenticity_token
 
   def create
