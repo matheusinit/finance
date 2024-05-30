@@ -36,7 +36,8 @@ request = function()
 	if not token_fetched then
 		return wrk.format(nil, "/csrf_token")
 	else
-		local email = run_command("fakedata email -l 1 | tr -d '\n'")
+		local command = "fakedata email -l 1 | tr -d '\n'"
+		local email = run_command(command)
 		local body = "name=TestUser&email=" .. email .. "&password=Password1.&password_confirmation=Password1."
 		return wrk.format("POST", "/user/new", wrk.headers, body)
 	end
