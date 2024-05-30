@@ -1,4 +1,13 @@
 pt-BR:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "A validação falhou: %{errors}"
+        # Outras mensagens de erro
+        taken: "já foi utilizado"
+        blank: "não pode ficar em branco"
+        too_short: "é muito curto (mínimo: %{count} caracteres)"
+        too_long: "é muito longo (máximo: %{count} caracteres)"
   date:
     formats:
       default: "%d/%m/%Y"
