@@ -22,7 +22,9 @@ FROM base as build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips pkg-config libpq-dev
+    apt-get install --no-install-recommends -y build-essential git libvips pkg-config libpq-dev nodejs npm
+
+RUN npm i -g yarn
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -32,11 +34,6 @@ RUN bundle install && \
 
 # Copy application code
 COPY . .
-
-RUN apt-get update -qq && \
-    apt-get install nodejs npm -y --no-install-recommends
-
-RUN npm i -g yarn
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
@@ -60,6 +57,7 @@ COPY --from=build /rails /rails
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
+
 USER rails:rails
 
 # Entrypoint prepares the database.
