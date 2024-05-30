@@ -4,6 +4,13 @@ init = function(args)
 	token_fetched = false
 end
 
+local function run_command(command)
+	local handle = io.popen(command)
+	local result = handle:read("*a")
+	handle:close()
+	return result
+end
+
 function table_to_string(tbl)
 	local result = {}
 	local function recurse(t, indent)
@@ -29,7 +36,7 @@ request = function()
 	if not token_fetched then
 		return wrk.format(nil, "/csrf_token")
 	else
-		local email = "test" .. math.random(100000) .. "@example.com"
+		local email = run_command("fakedata email -l 1 | tr -d '\n'")
 		local body = "name=TestUser&email=" .. email .. "&password=Password1.&password_confirmation=Password1."
 		return wrk.format("POST", "/user/new", wrk.headers, body)
 	end
