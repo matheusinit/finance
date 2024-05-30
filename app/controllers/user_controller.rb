@@ -11,19 +11,21 @@ class UserController < ApplicationController
       return
     end
 
-    user = User.new
-    user.id = SecureRandom.uuid
-    user.name = params[:name]
-    user.email = params[:email]
-    user.password = params[:password]
+    ActiveRecord::Base.transaction do
+      user = User.new
+      user.id = SecureRandom.uuid
+      user.name = params[:name]
+      user.email = params[:email]
+      user.password = params[:password]
 
-    user.save
+      user.save!
 
-    account = Account.new
-    account.id = SecureRandom.uuid
-    account.user_id = user.id
+      account = Account.new
+      account.id = SecureRandom.uuid
+      account.user_id = user.id
 
-    account.save
+      account.save!
+    end
   end
 
   def login
