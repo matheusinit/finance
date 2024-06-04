@@ -41,3 +41,15 @@
 /node_modules
 
 /config/credentials/production.key
+
+# Scala (Gatling)
+# .scala-build
+**/.metals
+**/.bsp
+**/.scalafmt.conf
+**/.bloop/
+**/target
+**/.idea
+**/.settings
+**/.classpath
+**/.project
