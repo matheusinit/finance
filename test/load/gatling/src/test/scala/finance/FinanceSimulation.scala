@@ -13,24 +13,32 @@ class FinanceSimulation extends Simulation {
 
   val httpProtocol = http
     .baseUrl(baseURL)
-    .userAgentHeader("Chaos Agent")
+    .inferHtmlResources()
+    .acceptHeader("application/json, text/javascript, */*; q=0.01")
+    .acceptEncodingHeader("gzip, deflate")
+    .acceptLanguageHeader("en-US,en;q=0.5")
+    .userAgentHeader(
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"
+    )
 
   val accountsCreation = scenario("Creation of accounts")
     .exec(
       http("Get CSRF token")
         .get("/csrf_token")
         .check(
-          jsonPath("$.csrf_token").saveAs("csrfToken")
+          jsonPath("$.csrf_token").saveAs("csrfToken"),
+          cookie("_finance_session").saveAs("app-session")
         )
     )
     .pause(1)
     // .feed(tsv("pessoas-payloads.tsv").circular())
     .exec(
-      http("creation")
+      http("Create user")
         .post("/user/new")
         // .body(StringBody("#{payload}"))
-        .header("content-type", "application/x-www-form-urlencoded")
+        // .header("content-type", "application/x-www-form-urlencoded")
         .header("X-CSRF-Token", "${csrfToken}")
+        .header("Cookie", "_finance_session=${app-session};")
         // 201 pros casos de sucesso :)
         // 422 pra requests inválidos :|
         // 400 pra requests bosta tipo data errada, tipos errados, etc. :(
