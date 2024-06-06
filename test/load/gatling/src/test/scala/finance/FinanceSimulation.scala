@@ -39,6 +39,9 @@ class FinanceSimulation extends Simulation {
         // .header("content-type", "application/x-www-form-urlencoded")
         .header("X-CSRF-Token", "${csrfToken}")
         .header("Cookie", "${setCookieHeader}")
+        .formParam("name", "Matheus Oliveira")
+        .formParam("email", "matheus1@email.com")
+        .formParam("password", "Pandaninja13.")
         // 201 pros casos de sucesso :)
         // 422 pra requests inválidos :|
         // 400 pra requests bosta tipo data errada, tipos errados, etc. :(
