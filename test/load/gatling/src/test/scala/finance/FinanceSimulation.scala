@@ -27,7 +27,7 @@ class FinanceSimulation extends Simulation {
         .get("/csrf_token")
         .check(
           jsonPath("$.csrf_token").saveAs("csrfToken"),
-          cookie("_finance_session").saveAs("app-session")
+          header("Set-Cookie").saveAs("setCookieHeader")
         )
     )
     .pause(1)
@@ -38,7 +38,7 @@ class FinanceSimulation extends Simulation {
         // .body(StringBody("#{payload}"))
         // .header("content-type", "application/x-www-form-urlencoded")
         .header("X-CSRF-Token", "${csrfToken}")
-        .header("Cookie", "_finance_session=${app-session};")
+        .header("Cookie", "${setCookieHeader}")
         // 201 pros casos de sucesso :)
         // 422 pra requests inválidos :|
         // 400 pra requests bosta tipo data errada, tipos errados, etc. :(
