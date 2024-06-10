@@ -25,10 +25,7 @@ class FinanceSimulation extends Simulation {
     .exec(
       http("Get CSRF token")
         .get("/csrf_token")
-        .check(
-          jsonPath("$.csrf_token").saveAs("csrfToken"),
-          header("Set-Cookie").saveAs("setCookieHeader")
-        )
+        .check(css("meta[name=csrf-token]", "content").saveAs("stoken"))
     )
     .pause(1)
     // .feed(tsv("pessoas-payloads.tsv").circular())
@@ -36,12 +33,12 @@ class FinanceSimulation extends Simulation {
       http("Create user")
         .post("/user/new")
         // .body(StringBody("#{payload}"))
-        // .header("content-type", "application/x-www-form-urlencoded")
-        .header("X-CSRF-Token", "${csrfToken}")
-        .header("Cookie", "${setCookieHeader}")
+        .header("content-type", "application/x-www-form-urlencoded")
+        .formParam("_token", "${stoken}")
         .formParam("name", "Matheus Oliveira")
         .formParam("email", "matheus1@email.com")
         .formParam("password", "Pandaninja13.")
+        .formParam("password_confirmation", "Pandaninja13.")
         // 201 pros casos de sucesso :)
         // 422 pra requests inválidos :|
         // 400 pra requests bosta tipo data errada, tipos errados, etc. :(
@@ -58,9 +55,9 @@ class FinanceSimulation extends Simulation {
 
   setUp(
     accountsCreation.inject(
-      constantUsersPerSec(2).during(10.seconds), // warm up
-      constantUsersPerSec(5).during(15.seconds).randomized, // are you ready?
-      rampUsersPerSec(6).to(10).during(3.minutes) // lezzz go!!!
+      constantUsersPerSec(2).during(5.seconds) // warm up
+      // constantUsersPerSec(5).during(15.seconds).randomized // are you ready?
+      // rampUsersPerSec(6).to(10).during(30.minutes) // lezzz go!!!
     )
   ).protocols(httpProtocol)
 }
