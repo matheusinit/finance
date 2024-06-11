@@ -23,41 +23,27 @@ class FinanceSimulation extends Simulation {
 
   val accountsCreation = scenario("Creation of accounts")
     .exec(
-      http("Get CSRF token")
-        .get("/csrf_token")
-        .check(css("meta[name=csrf-token]", "content").saveAs("stoken"))
+      http("Get HTML Page")
+      .get("/user/new")
+      .check(status.is(200))
+      .check(css("meta[name='csrf-token']", "content").saveAs("csrfToken")) // Extract the CSRF token
     )
-    .pause(1)
-    // .feed(tsv("pessoas-payloads.tsv").circular())
     .exec(
       http("Create user")
         .post("/user/new")
-        // .body(StringBody("#{payload}"))
+        .header("x-csrf-token", "#{csrfToken}")
         .header("content-type", "application/x-www-form-urlencoded")
-        .formParam("_token", "${stoken}")
         .formParam("name", "Matheus Oliveira")
-        .formParam("email", "matheus1@email.com")
+        .formParam("email", "matheus13@email.com")
         .formParam("password", "Pandaninja13.")
         .formParam("password_confirmation", "Pandaninja13.")
-        // 201 pros casos de sucesso :)
-        // 422 pra requests inválidos :|
-        // 400 pra requests bosta tipo data errada, tipos errados, etc. :(
         .check(status.in(201, 422, 400, 500))
-        // Se a criacao foi na api1 e esse location request atingir api2, a api2 tem que encontrar o registro.
-        // Pode ser que o request atinga a mesma instancia, mas estatisticamente, pelo menos um request vai atingir a outra.
-        // Isso garante o teste de consistencia de dados
-        .check(status.saveAs("httpStatus"))
-        .checkIf(session => session("httpStatus").as[String] == "201") {
-          header("Location").saveAs("location")
-        }
     )
     .pause(1.milliseconds, 30.milliseconds)
 
   setUp(
     accountsCreation.inject(
-      constantUsersPerSec(2).during(5.seconds) // warm up
-      // constantUsersPerSec(5).during(15.seconds).randomized // are you ready?
-      // rampUsersPerSec(6).to(10).during(30.minutes) // lezzz go!!!
+      constantUsersPerSec(2).during(5.seconds)
     )
   ).protocols(httpProtocol)
 }
