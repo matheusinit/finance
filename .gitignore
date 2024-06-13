@@ -53,3 +53,6 @@
 **/.settings
 **/.classpath
 **/.project
+
+# Visual Studio Code
+.vscode
