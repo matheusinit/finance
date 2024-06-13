@@ -26,6 +26,8 @@ class UserController < ApplicationController
 
       account.save!
     end
+
+    head :created
   end
 
   def login
