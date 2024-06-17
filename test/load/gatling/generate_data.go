@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/brianvoe/gofakeit/v7"
 	"log"
 	"os/exec"
 	"strings"
@@ -25,9 +26,12 @@ func main() {
 	var csv_content strings.Builder
 
 	for i := 0; i < NUMBER_OF_RECORDS; i++ {
-		email := generate_data("email", "-l", "1")
-		name := generate_data("name.first", "-l", "1")
-		password := generate_data("sentence", "-l", "1")
+		email := gofakeit.Email()
+		// email := generate_data("email", "-l", "1")
+		// name := generate_data("name.first", "-l", "1")
+		// password := generate_data("sentence", "-l", "1")
+		name := gofakeit.Name()
+		password := gofakeit.Password(true, true, true, true, false, 10)
 
 		row := name + ", " + email + ", " + password + "\n"
 
