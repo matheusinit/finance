@@ -1,42 +1,54 @@
 package main
 
 import (
+	"encoding/csv"
 	"fmt"
 	"github.com/brianvoe/gofakeit/v7"
-	"log"
-	"os/exec"
-	"strings"
+	"os"
 )
 
-func generate_data(args ...string) string {
-	cmd := exec.Command("fakedata", args...)
+func main() {
+	const NUMBER_OF_RECORDS = 1000000
 
-	output, err := cmd.Output()
+	// var csv_content strings.Builder
 
-	if err != nil {
-		log.Fatalf("Failed to execute command: %s", err)
+	columns := []string{
+		"name", "email", "password", "password_confirmation",
 	}
 
-	return strings.TrimSpace(strings.ReplaceAll(string(output), ",", ""))
-}
+	// csv_content.WriteString(columns)
 
-func main() {
-	const NUMBER_OF_RECORDS = 1000
+	file, err := os.Create("users.csv")
 
-	var csv_content strings.Builder
+	if err != nil {
+		panic(err)
+	}
+
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+
+	// var records [][]string
+
+	records := [][]string{}
+
+	records = append(records, columns)
 
 	for i := 0; i < NUMBER_OF_RECORDS; i++ {
 		email := gofakeit.Email()
-		// email := generate_data("email", "-l", "1")
-		// name := generate_data("name.first", "-l", "1")
-		// password := generate_data("sentence", "-l", "1")
 		name := gofakeit.Name()
 		password := gofakeit.Password(true, true, true, true, false, 10)
 
-		row := name + ", " + email + ", " + password + "\n"
+		var row = []string{
+			name, email, password, password,
+		}
 
-		csv_content.WriteString(row)
+		records = append(records, row)
+
+		// csv_content.WriteString(row)
 	}
 
-	fmt.Println(csv_content.String())
+	writer.WriteAll(records)
+
+	fmt.Println(records)
 }
