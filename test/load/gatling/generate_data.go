@@ -12,8 +12,8 @@ func force_password_pattern(password string) string {
 	has_uppercase_letter := false
 	has_lowercase_letter := false
 
-	var first_uppercase_letter byte
-	var first_lowercase_letter byte
+	var last_uppercase_letter byte
+	var last_lowercase_letter byte
 
 	for i := 0; i < len(password); i++ {
 		letter := password[i]
@@ -21,33 +21,29 @@ func force_password_pattern(password string) string {
 		if letter >= 65 && letter <= 90 {
 			has_uppercase_letter = true
 
-			first_uppercase_letter = letter
+			last_uppercase_letter = letter
 		}
 
 		if letter >= 97 && letter <= 122 {
 			has_lowercase_letter = true
-			first_lowercase_letter = letter
+
+			last_lowercase_letter = letter
 		}
 	}
 
-	if has_lowercase_letter == false || has_uppercase_letter == false {
-		fmt.Printf("before: %s\n", password)
-		fmt.Printf("after: %s\n", password)
-	}
-
 	if has_lowercase_letter == false {
-		password = strings.Replace(password, string(first_uppercase_letter), string(first_uppercase_letter+32), 1)
+		password = strings.Replace(password, string(last_uppercase_letter), strings.ToLower(string(last_uppercase_letter)), 1)
 	}
 
 	if has_uppercase_letter == false {
-		password = strings.Replace(password, string(first_lowercase_letter), string(first_lowercase_letter-32), 1)
+		password = strings.Replace(password, string(last_lowercase_letter), strings.ToUpper(string(last_lowercase_letter)), 1)
 	}
 
 	return password
 }
 
 func main() {
-	const NUMBER_OF_RECORDS = 10
+	const NUMBER_OF_RECORDS = 1000000
 
 	columns := []string{
 		"name", "email", "password", "password_confirmation",
