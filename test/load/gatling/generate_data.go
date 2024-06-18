@@ -3,12 +3,9 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
+	"github.com/brianvoe/gofakeit/v7"
 	"os"
 	"strings"
-
-	// "strings"
-
-	"github.com/brianvoe/gofakeit/v7"
 )
 
 func force_password_pattern(password string) string {
@@ -52,13 +49,9 @@ func force_password_pattern(password string) string {
 func main() {
 	const NUMBER_OF_RECORDS = 10
 
-	// var csv_content strings.Builder
-
 	columns := []string{
 		"name", "email", "password", "password_confirmation",
 	}
-
-	// csv_content.WriteString(columns)
 
 	file, err := os.Create("users.csv")
 
@@ -69,8 +62,6 @@ func main() {
 	defer file.Close()
 
 	writer := csv.NewWriter(file)
-
-	// var records [][]string
 
 	records := [][]string{}
 
@@ -88,8 +79,6 @@ func main() {
 		}
 
 		records = append(records, row)
-
-		// csv_content.WriteString(row)
 	}
 
 	writer.WriteAll(records)
