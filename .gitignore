@@ -56,3 +56,5 @@
 
 # Visual Studio Code
 .vscode
+
+/test/**/*.csv
