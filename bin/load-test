@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+(cd test/load/gatling; exec go run ./generate_data.go)
+(cd test/load/gatling/src/test/resources; exec rm users.csv)
+(cd test/load/gatling; exec mv users.csv ./src/test/resources/users.csv)
+(cd test/load/gatling; exec sbt Gatling/test)
+

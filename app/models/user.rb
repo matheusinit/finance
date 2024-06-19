@@ -12,7 +12,7 @@ class User < ApplicationRecord
       errors.add(:password, "must be at least 10 characters")
     end
 
-    unless password.match?(/\A(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_])/)
+    unless password.match?(/\A(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.-^])/)
       errors.add(:password, "must contain at least one lowercase letter, one uppercase letter, one special character, and one number")
     end
   end

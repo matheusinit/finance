@@ -6,6 +6,7 @@ import scala.util.Random
 
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
+import io.gatling.core.feeder._
 
 class FinanceSimulation extends Simulation {
 
@@ -32,13 +33,16 @@ class FinanceSimulation extends Simulation {
     .post("/user/new")
     .header("x-csrf-token", "#{csrfToken}")
     .header("content-type", "application/x-www-form-urlencoded")
-    .formParam("name", "Matheus Oliveira")
-    .formParam("email", "matheus13@email.com")
-    .formParam("password", "Pandaninja13.")
-    .formParam("password_confirmation", "Pandaninja13.")
+    .formParam("name", "#{name}")
+    .formParam("email", "#{email}")
+    .formParam("password", "#{password}")
+    .formParam("password_confirmation", "#{password_confirmation}")
     .check(status.in(201))
 
+  val users = csv("users.csv").circular()
+
   val accountsCreation = scenario("Creation of accounts")
+    .feed(users)
     .exec(getCSRFToken)
     .exec(createUser)
     .pause(1.milliseconds, 30.milliseconds)
