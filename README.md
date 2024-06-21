@@ -12,6 +12,10 @@
 </tr>
 </table>
 
+<div align="center">
+    <img src="./.github/app.png" />
+</div>
+
 ## 👨‍💻 Tecnologias
 
 Para executar a aplicação, é necessário ter essas ferramentas instaladas no sistema:
