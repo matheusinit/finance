@@ -47,7 +47,7 @@ class FinanceSimulation extends Simulation {
 
   setUp(
     users.inject(
-      rampUsersPerSec(10).to(20).during(30.seconds)
+      rampUsersPerSec(10).to(50).during(30.seconds)
     )
   ).protocols(httpProtocol)
 }
