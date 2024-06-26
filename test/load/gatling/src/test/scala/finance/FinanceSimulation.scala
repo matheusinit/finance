@@ -38,17 +38,17 @@ class FinanceSimulation extends Simulation {
     .formParam("password_confirmation", "#{password_confirmation}")
     .check(status.in(201))
 
-  val users = csv("users.csv").circular()
+  val data = csv("users.csv").circular()
 
-  val accountsCreation = scenario("Creation of accounts")
-    .feed(users)
+  val users = scenario("Creation of accounts")
+    .feed(data)
     .exec(getCSRFToken)
     .exec(createUser)
     .pause(1.milliseconds, 30.milliseconds)
 
   setUp(
-    accountsCreation.inject(
-      constantUsersPerSec(2).during(5.seconds)
+    users.inject(
+      rampUsersPerSec(10).to(20).during(30.seconds)
     )
   ).protocols(httpProtocol)
 }
