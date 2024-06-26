@@ -22,10 +22,9 @@ class FinanceSimulation extends Simulation {
     )
 
   val getCSRFToken = http("Get CSRF Token")
-    .get("/user/new")
-    .check(status.is(200))
+    .get("/csrf_token")
     .check(
-      css("meta[name='csrf-token']", "content").saveAs("csrfToken")
+      jsonPath("$.csrf_token").saveAs("csrfToken")
     )
 
   val createUser = http("Create user")
