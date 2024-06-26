@@ -14,7 +14,6 @@ class FinanceSimulation extends Simulation {
 
   val httpProtocol = http
     .baseUrl(baseURL)
-    .inferHtmlResources()
     .acceptHeader("application/json, text/javascript, */*; q=0.01")
     .acceptEncodingHeader("gzip, deflate")
     .acceptLanguageHeader("en-US,en;q=0.5")
