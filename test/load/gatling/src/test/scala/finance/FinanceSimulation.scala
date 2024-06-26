@@ -10,7 +10,7 @@ import io.gatling.core.feeder._
 
 class FinanceSimulation extends Simulation {
 
-  val baseURL = "http://localhost:3000"
+  val baseURL = "http://0.0.0.0:3000"
 
   val httpProtocol = http
     .baseUrl(baseURL)
