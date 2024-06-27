@@ -1,33 +1,40 @@
+require "new_relic/agent/method_tracer"
+
 class UserController < ApplicationController
+  extend ::NewRelic::Agent::MethodTracer
   skip_before_action :require_login, only: [:create, :login]
 
   def create
-    if params[:name] == nil or params[:email] == nil or params[:password] == nil
-      return
+    self.class.trace_execution_scoped(["Custom/slow_action/beginning_work"]) do
+      # if params[:password] != params[:password_confirmation]
+      #   redirect_to "/user/new", alert: "Passwords do not match"
+      #   return
+      # end
+
+      ActiveRecord::Base.transaction do
+        user = User.new(
+          :email => params[:email],
+          :name => params[:name],
+          :password => params[:password],
+          :id => SecureRandom::uuid,
+        )
+
+        user.save!
+
+        account = Account.new(:id => SecureRandom.uuid, :user_id => user.id)
+
+        account.save!
+      end
+
+      head :created
     end
+  rescue ActiveRecord::RecordInvalid => e
+    flash.now[:alert] = "Transaction failed: #{e.message}"
+    render :new
+  end
 
-    if params[:password] != params[:password_confirmation]
-      redirect_to "/user/new", alert: "Passwords do not match"
-      return
-    end
-
-    ActiveRecord::Base.transaction do
-      user = User.new
-      user.id = SecureRandom.uuid
-      user.name = params[:name]
-      user.email = params[:email]
-      user.password = params[:password]
-
-      user.save!
-
-      account = Account.new
-      account.id = SecureRandom.uuid
-      account.user_id = user.id
-
-      account.save!
-    end
-
-    head :created
+  def new
+    @user = User.new
   end
 
   def login
