@@ -43,7 +43,9 @@ gem "bootsnap", require: false
 
 gem "pg"
 
-gem 'dotenv-rails', groups: [:development, :test]
+gem "newrelic_rpm"
+
+gem "newrelic-infinite_tracing"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
