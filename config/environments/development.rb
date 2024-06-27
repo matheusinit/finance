@@ -59,6 +59,8 @@ Rails.application.configure do
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
 
+  config.active_job.query_log_tags_enabled = true
+
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
@@ -73,4 +75,6 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+  config.log_level = :debug
 end
