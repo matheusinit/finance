@@ -1,33 +1,23 @@
-require "new_relic/agent/method_tracer"
-
 class UserController < ApplicationController
-  extend ::NewRelic::Agent::MethodTracer
   skip_before_action :require_login, only: [:create, :login]
 
   def create
-    self.class.trace_execution_scoped(["Custom/slow_action/beginning_work"]) do
-      # if params[:password] != params[:password_confirmation]
-      #   redirect_to "/user/new", alert: "Passwords do not match"
-      #   return
-      # end
+    ActiveRecord::Base.transaction do
+      user = User.new(
+        :email => params[:email],
+        :name => params[:name],
+        :password => params[:password],
+        :id => SecureRandom::uuid,
+      )
 
-      ActiveRecord::Base.transaction do
-        user = User.new(
-          :email => params[:email],
-          :name => params[:name],
-          :password => params[:password],
-          :id => SecureRandom::uuid,
-        )
+      user.save!
 
-        user.save!
+      account = Account.new(:id => SecureRandom.uuid, :user_id => user.id)
 
-        account = Account.new(:id => SecureRandom.uuid, :user_id => user.id)
-
-        account.save!
-      end
-
-      head :created
+      account.save!
     end
+
+    head :created
   rescue ActiveRecord::RecordInvalid => e
     flash.now[:alert] = "Transaction failed: #{e.message}"
     render :new
