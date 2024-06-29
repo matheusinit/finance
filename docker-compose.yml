@@ -7,7 +7,6 @@ services:
     ports:
       - 3000:3000
     environment:
-      RAILS_ENV: production 
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_PORT: ${POSTGRES_PORT}
       POSTGRES_USER: ${POSTGRES_USER}
