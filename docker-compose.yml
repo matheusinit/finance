@@ -1,11 +1,43 @@
 services:
-  app:
+  load-balancer:
+    image: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 8080:80
+    environment:
+      NGINX_PORT: 80
+    depends_on:
+      - app1
+      - app2
+
+  app1:
     build:
       context: .
       args:
         RAILS_ENV: development
     ports:
       - 3000:3000
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '500MB'
+
+  app2:
+    build:
+      context: .
+      args:
+        RAILS_ENV: development
+    ports:
+      - 3001:3000
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_PORT: ${POSTGRES_PORT}

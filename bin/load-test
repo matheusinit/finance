@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-docker exec -it finance-app-1 bin/rails db:reset DISABLE_DATABASE_ENVIRONMENT_CHECK=1
+docker exec -it finance-app1-1 bin/rails db:reset DISABLE_DATABASE_ENVIRONMENT_CHECK=1
 
 (cd test/load/gatling; exec go run ./generate_data.go)
 (cd test/load/gatling/src/test/resources; exec rm users.csv)
