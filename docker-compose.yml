@@ -10,6 +10,11 @@ services:
     depends_on:
       - app1
       - app2
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '256MB'
 
   app1:
     build:
