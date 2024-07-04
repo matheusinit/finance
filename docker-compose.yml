@@ -20,7 +20,7 @@ services:
     build:
       context: .
       args:
-        RAILS_ENV: development
+        RAILS_ENV: production
     ports:
       - 3000:3000
     environment:
@@ -30,6 +30,9 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      RAILS_MAX_THREADS: 5 
+      DB_POOL: 20 
+      WEB_CONCURRENCY: 1 
     deploy:
       resources:
         limits:
@@ -40,7 +43,7 @@ services:
     build:
       context: .
       args:
-        RAILS_ENV: development
+        RAILS_ENV: production 
     ports:
       - 3001:3000
     environment:
@@ -50,11 +53,37 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      RAILS_MAX_THREADS: 5 
+      DB_POOL: 20 
+      WEB_CONCURRENCY: 1 
     deploy:
       resources:
         limits:
           cpus: '1'
           memory: '500MB'
+
+  # app3:
+  #   build:
+  #     context: .
+  #     args:
+  #       RAILS_ENV: production 
+  #   ports:
+  #     - 3002:3000
+  #   environment:
+  #     POSTGRES_HOST: ${POSTGRES_HOST}
+  #     POSTGRES_PORT: ${POSTGRES_PORT}
+  #     POSTGRES_USER: ${POSTGRES_USER}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #     POSTGRES_DB: ${POSTGRES_DB}
+  #     RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+  #     RAILS_MAX_THREADS: 40
+  #     DB_POOL: 80
+  #     WEB_CONCURRENCY: 2 
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '1'
+  #         memory: '500MB'
 
   database:
     image: postgres:15.7-bookworm
@@ -75,6 +104,14 @@ services:
       - 54329:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./postgresql.conf:/etc/postgresql.conf
+    # command: postgres -c config_file=/etc/postgresql.conf 
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
     deploy:
       resources:
         limits:
