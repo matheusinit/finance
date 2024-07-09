@@ -3,13 +3,51 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
-	"github.com/brianvoe/gofakeit/v7"
-	"github.com/sethvargo/go-password/password"
+	"io"
+	"log"
+	"net/http"
 	"os"
+	// "strings"
+
+	"github.com/brianvoe/gofakeit/v7"
+	// "github.com/google/uuid"
+	// "github.com/jor-go/csrf"
+	"github.com/sethvargo/go-password/password"
 )
 
+func getCsrfToken() string {
+	url := "http://0.0.0.0:8080/csrf_token"
+
+	resp, err := http.Get(url)
+
+	if err != nil {
+		log.Fatalf("Failed to make request: %v", err)
+	}
+
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+
+	if err != nil {
+		log.Fatalf("Failed to read response body: %v", err)
+	}
+
+	csrf_token := string(body)
+	csrf_token = csrf_token[15:]
+
+	// csrf_token := strings.Replace(string(body), "\"csrf_token\"", "", -1)
+	// csrf_token = strings.Replace(csrf_token, ":", "", -1)
+	// csrf_token = strings.Replace(csrf_token, "\"", "", -1)
+	// csrf_token = strings.Replace(csrf_token, "{", "", -1)
+	// csrf_token = strings.Replace(csrf_token, "}", "", -1)
+
+	csrf_token = csrf_token[:len(csrf_token)-2]
+
+	return csrf_token
+}
+
 func main() {
-	const NUMBER_OF_RECORDS = 1000000
+	const NUMBER_OF_RECORDS = 60000
 
 	columns := []string{
 		"name", "email", "password", "password_confirmation",
@@ -33,6 +71,10 @@ func main() {
 		email := gofakeit.Email()
 		name := gofakeit.Name()
 		password, err := password.Generate(12, 1, 1, false, false)
+		// csrf_token := getCsrfToken()
+		// uuid, _ := uuid.NewUUID()
+		// csrf_token := csrf.CreateToken(uuid.String())
+		// println(csrf_token)
 
 		if err != nil {
 			fmt.Println("Error:", err)
