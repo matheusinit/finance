@@ -45,14 +45,14 @@ class FinanceSimulation extends Simulation {
     .feed(data)
     // .exec(getCSRFToken)
     .exec(createUser)
-    .pause(1.milliseconds, 30.milliseconds)
+    // .pause(1.milliseconds, 30.milliseconds)
 
   setUp(
     users.inject(
       constantUsersPerSec(2).during(10.seconds),
       constantUsersPerSec(5).during(15.seconds).randomized,
 
-      rampUsersPerSec(10).to(20).during(1.minutes)
+      rampUsersPerSec(10).to(500).during(2.minutes)
     )
   ).protocols(httpProtocol)
 }
