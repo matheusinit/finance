@@ -10,24 +10,31 @@ services:
     depends_on:
       - app1
       - app2
-    ulimits:
-      nproc: 1000000
-      nofile:
-        soft: 1000000
-        hard: 1000000 
+    # ulimits:
+    #   nproc: 1000000
+    #   nofile:
+    #     soft: 1000000
+    #     hard: 1000000 
+    # network_mode: host
     deploy:
       resources:
         limits:
-          cpus: '1'
-          memory: '256MB'
+          cpus: '0.15'
+          memory: '0.5GB'
 
   app1:
-    build:
-      context: .
-      args:
-        RAILS_ENV: production
-    ports:
-      - 3000:3000
+    # build:
+    #   context: .
+    #   args:
+    #     RAILS_ENV: development 
+    image: finance-app
+    hostname: app1
+    depends_on:
+      - database 
+    expose:
+      - '3000'
+    # ports:
+    #   - 3000:3000
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_PORT: ${POSTGRES_PORT}
@@ -35,23 +42,28 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
-      RAILS_MAX_THREADS: 5 
-      DB_POOL: 5 
-      WEB_CONCURRENCY: 1 
+      RAILS_LOG_LEVEL: warn
+      WEB_CONCURRENCY: 2
       RUBY_YJIT_ENABLE: 1
     deploy:
       resources:
         limits:
-          cpus: '1'
-          memory: '500MB'
+          cpus: '0.5'
+          memory: '0.5GB'
 
   app2:
-    build:
-      context: .
-      args:
-        RAILS_ENV: production
-    ports:
-      - 3001:3000
+    # build:
+    #   context: .
+    #   args:
+    #     RAILS_ENV: development
+    image: finance-app
+    hostname: app1
+    depends_on:
+      - database 
+    expose:
+      - '3000'
+    # ports:
+    #   - 3001:3000
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_PORT: ${POSTGRES_PORT}
@@ -59,15 +71,14 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
-      RAILS_MAX_THREADS: 5 
-      DB_POOL: 5 
-      WEB_CONCURRENCY: 1 
+      WEB_CONCURRENCY: 2
       RUBY_YJIT_ENABLE: 1
+      RAILS_LOG_LEVEL: warn
     deploy:
       resources:
         limits:
-          cpus: '1'
-          memory: '500MB'
+          cpus: '0.5'
+          memory: '0.5GB'
 
   database:
     image: postgres:15.7-bookworm
@@ -99,8 +110,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1'
-          memory: '500MB'
+          cpus: '0.35'
+          memory: '1.5GB'
 
 volumes:
   pgdata:

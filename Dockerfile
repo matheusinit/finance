@@ -1,5 +1,3 @@
-# syntax = docker/dockerfile:1
-
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
 ARG RUBY_VERSION=3.3.0
 ARG RAILS_ENV="production"
