@@ -23,11 +23,12 @@ services:
           memory: '0.5GB'
 
   app1:
+    build: .
     # build:
     #   context: .
     #   args:
     #     RAILS_ENV: development 
-    image: finance-app
+    # image: finance-app
     hostname: app1
     depends_on:
       - database 
@@ -52,11 +53,12 @@ services:
           memory: '0.5GB'
 
   app2:
+    build: .
     # build:
     #   context: .
     #   args:
     #     RAILS_ENV: development
-    image: finance-app
+    # image: finance-app
     hostname: app1
     depends_on:
       - database 

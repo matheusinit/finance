@@ -12,11 +12,11 @@ class UserController < ApplicationController
       #   :id => SecureRandom::uuid,
       # )
 
-      user = User.create!(params.permit(:email, :name))
+      user = User.create!(params.permit(:email, :name, :password))
 
       # user.save!
       #
-      Account.create!(:id => SecureRandom.uuid, :user_id => user.id)
+      Account.create!(:user_id => user.id)
       #
       # account.save!
     end

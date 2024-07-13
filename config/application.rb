@@ -1,7 +1,7 @@
 require_relative "boot"
 
 require "rails/all"
-require 'active_record/connection_adapters/sqlite3_adapter'
+require "active_record/connection_adapters/sqlite3_adapter"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.

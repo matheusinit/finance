@@ -43,6 +43,9 @@ gem "bootsnap", require: false
 
 gem "pg"
 
+gem "newrelic_rpm"
+gem "newrelic-infinite_tracing"
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -56,9 +59,9 @@ group :development do
   gem "web-console"
   gem "rails_live_reload"
 
-  gem "newrelic_rpm"
+  gem "ruby-prof"
 
-  gem "newrelic-infinite_tracing"
+  gem "ruby-prof-flamegraph"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -77,3 +80,5 @@ gem "tailwindcss-rails", "~> 2.3"
 gem "inline_svg"
 
 gem "jsbundling-rails", "~> 1.3"
+
+gem "sidekiq", "~> 7.3"
