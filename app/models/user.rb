@@ -1,7 +1,6 @@
 require "bcrypt"
 
 class User < ApplicationRecord
-  # has_secure_password :validations => false
   include BCrypt
 
   attr_accessor :password

@@ -2,33 +2,27 @@ class UserController < ApplicationController
   skip_before_action :require_login, only: [:create, :login]
 
   def create
-    # logger.fatal "Request initiated #{request.request_id}"
-
     ActiveRecord::Base.transaction do
-      # user = User.new(
-      #   :email => params[:email],
-      #   :name => params[:name],
-      #   :password => params[:password],
-      #   :id => SecureRandom::uuid,
-      # )
+      user = User.new(
+        :email => params[:email],
+        :name => params[:name],
+        :password => params[:password],
+        :id => SecureRandom::uuid,
+      )
 
-      user = User.create!(params.permit(:email, :name, :password))
+      user.save!
 
-      # user.save!
-      #
-      Account.create!(:user_id => user.id)
-      #
-      # account.save!
+      account = Account.new(
+        :user_id => user.id,
+      )
+
+      account.save!
     end
-
-    # logger.fatal "Request finished #{request.request_id}"
 
     head :created
   rescue ActiveRecord::RecordInvalid => e
     flash.now[:alert] = "Transaction failed: #{e.message}"
     render :new
-
-    # logger.fatal "Request finished #{request.request_id}"
   end
 
   def new
