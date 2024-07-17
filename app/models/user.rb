@@ -16,7 +16,7 @@ class User < ApplicationRecord
 
   def encrypt_password
     if password.present?
-      cost = 4
+      cost = 12
       password_salt = BCrypt::Engine.generate_salt(cost)
       self.password_digest = BCrypt::Engine.hash_secret(password, password_salt)
     end
