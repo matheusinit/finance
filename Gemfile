@@ -76,5 +76,3 @@ gem "tailwindcss-rails", "~> 2.3"
 gem "inline_svg"
 
 gem "jsbundling-rails", "~> 1.3"
-
-gem "sidekiq", "~> 7.3"
