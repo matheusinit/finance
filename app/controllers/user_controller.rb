@@ -7,7 +7,6 @@ class UserController < ApplicationController
         :email => params[:email],
         :name => params[:name],
         :password => params[:password],
-        :id => SecureRandom::uuid,
       )
 
       user.save!
