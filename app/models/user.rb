@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   attr_accessor :password
 
-  has_one :accounts, dependent: :delete_all
+  has_one :accounts, dependent: :delete
 
   validates_presence_of :name, :email, :password
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
