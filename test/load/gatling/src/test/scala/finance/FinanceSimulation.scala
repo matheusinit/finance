@@ -54,7 +54,7 @@ class FinanceSimulation extends Simulation {
       constantUsersPerSec(2).during(10.seconds),
       constantUsersPerSec(5).during(15.seconds).randomized,
 
-      rampUsersPerSec(10).to(30).during(1.minutes)
+      rampUsersPerSec(10).to(225).during(1.minutes)
     )
   ).protocols(httpProtocol)
 }
