@@ -23,12 +23,8 @@ services:
           memory: '0.5GB'
 
   app1:
-    # build: .
-    # build:
-    #   context: .
-    #   args:
-    #     RAILS_ENV: development 
-    image: finance-app
+    build:
+      context: .
     hostname: app1
     depends_on:
       - database 
@@ -41,6 +37,7 @@ services:
       POSTGRES_PORT: ${POSTGRES_PORT}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      RAILS_ENV: ${RAILS_ENV}
       POSTGRES_DB: ${POSTGRES_DB}
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
       RAILS_LOG_LEVEL: warn
@@ -53,11 +50,8 @@ services:
           memory: '0.5GB'
 
   app2:
-    # build: .
-    # build:
-    #   context: .
-    #   args:
-    #     RAILS_ENV: development
+    build:
+      context: .
     image: finance-app
     hostname: app2
     depends_on:
@@ -71,6 +65,7 @@ services:
       POSTGRES_PORT: ${POSTGRES_PORT}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      RAILS_ENV: ${RAILS_ENV}
       POSTGRES_DB: ${POSTGRES_DB}
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
       WEB_CONCURRENCY: 2
@@ -83,11 +78,8 @@ services:
           memory: '0.5GB'
 
   app3:
-    # build: .
-    # build:
-    #   context: .
-    #   args:
-    #     RAILS_ENV: development
+    build:
+      context: .
     image: finance-app
     hostname: app3
     depends_on:
@@ -101,6 +93,7 @@ services:
       POSTGRES_PORT: ${POSTGRES_PORT}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      RAILS_ENV: ${RAILS_ENV}
       POSTGRES_DB: ${POSTGRES_DB}
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
       WEB_CONCURRENCY: 2
