@@ -49,7 +49,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: '2'
           memory: '0.5GB'
 
   app2:
@@ -79,7 +79,37 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: '2'
+          memory: '0.5GB'
+
+  app3:
+    # build: .
+    # build:
+    #   context: .
+    #   args:
+    #     RAILS_ENV: development
+    image: finance-app
+    hostname: app3
+    depends_on:
+      - database
+    expose:
+      - '3000'
+    # ports:
+    #   - 3001:3000
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      WEB_CONCURRENCY: 2
+      RUBY_YJIT_ENABLE: 1
+      RAILS_LOG_LEVEL: warn
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
           memory: '0.5GB'
 
   database:
