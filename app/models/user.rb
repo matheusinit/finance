@@ -4,11 +4,13 @@ class User < ApplicationRecord
   include BCrypt
 
   attr_accessor :password
+  attr_accessor :password_confirmation
 
   has_one :accounts, dependent: :delete
 
-  validates_presence_of :name, :email, :password
+  validates_presence_of :name, :email, :password, :password_confirmation
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validate :check_password_confirmation
   validate :validate_password
   before_save :encrypt_password
 
@@ -19,6 +21,12 @@ class User < ApplicationRecord
       cost = 8
       password_salt = BCrypt::Engine.generate_salt(cost)
       self.password_digest = BCrypt::Engine.hash_secret(password, password_salt)
+    end
+  end
+
+  def check_password_confirmation
+    if password != password_confirmation
+      errors.add(password_confirmation, "password and password confirmation must be equal")
     end
   end
 

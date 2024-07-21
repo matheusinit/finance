@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   get "/", to: "page#home"
 
-  get "/user/new", to: "user#create", as: :signup_form
+  get "/user/new", to: "user#new", as: :signup_form
   post "/user/new", to: "user#create", as: :signup
   get "/login", to: "user#login", as: :login
   get "/logout", to: "user#destroy_session"

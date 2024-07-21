@@ -1,27 +1,22 @@
 class UserController < ApplicationController
-  skip_before_action :require_login, only: [:create, :login]
+  skip_before_action :require_login, only: [:create, :login, :new]
 
   def create
     ActiveRecord::Base.transaction do
-      user = User.new(
-        :email => params[:email],
-        :name => params[:name],
-        :password => params[:password],
-      )
+      @user = User.new(user_params)
 
-      user.save!
+      if @user.save
+        account = Account.new(
+          :user_id => @user.id,
+        )
 
-      account = Account.new(
-        :user_id => user.id,
-      )
+        account.save!
 
-      account.save!
+        redirect_to login_path
+      else
+        render :new, status: :unprocessable_entity
+      end
     end
-
-    head :created
-  rescue ActiveRecord::RecordInvalid => e
-    flash.now[:alert] = "Transaction failed: #{e.message}"
-    render :new
   end
 
   def new
@@ -125,5 +120,11 @@ class UserController < ApplicationController
     account = Account.find_by(user_id: user.id)
     account.login_attempts = 0
     account.save
+  end
+
+  private
+
+  def user_params
+    params.permit(:name, :email, :password, :password_confirmation)
   end
 end
