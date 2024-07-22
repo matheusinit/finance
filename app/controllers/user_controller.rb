@@ -28,21 +28,21 @@ class UserController < ApplicationController
     is_email_nil = params[:email] == nil
 
     if !is_email_nil and is_email_blank
-      redirect_to "/login", alert: "Endereço de e-mail não informado"
+      redirect_to login_path, alert: "Endereço de e-mail não informado"
       return
     end
 
     is_valid_email = (params[:email] =~ URI::MailTo::EMAIL_REGEXP) != nil
 
     unless is_valid_email or is_email_blank
-      redirect_to "/login", alert: "Endereço de e-mail inválido"
+      redirect_to login_path, alert: "Endereço de e-mail inválido"
       return
     end
 
     is_password_blank = (params[:password] != nil and params[:password].blank?)
 
     if is_password_blank
-      redirect_to "/login", alert: "Senha não informada"
+      redirect_to login_path, alert: "Senha não informada"
       return
     end
 
@@ -66,18 +66,18 @@ class UserController < ApplicationController
       end
 
       if login_is_blocked
-        redirect_to "/login", alert: "Muitas tentativas de login, o seu usuario foi bloqueado por 10 minutos. Tente novamente em breve."
+        redirect_to login_path, alert: "Muitas tentativas de login, o seu usuario foi bloqueado por 10 minutos. Tente novamente em breve."
         return
       end
 
-      redirect_to "/login", alert: "Credenciais inválidas"
+      redirect_to login_path, alert: "Credenciais inválidas"
     end
   end
 
   def destroy_session
     session.delete(:current_user_id)
 
-    redirect_to "/login"
+    redirect_to login_path
   end
 
   private
