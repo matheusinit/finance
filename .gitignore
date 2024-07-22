@@ -42,6 +42,9 @@
 # Ignore node modules
 /node_modules
 
+# JavaScript
+.yarn/
+
 /config/credentials/production.key
 
 # Scala (Gatling)
