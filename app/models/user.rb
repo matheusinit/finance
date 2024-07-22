@@ -26,7 +26,7 @@ class User < ApplicationRecord
 
   def check_password_confirmation
     if password != password_confirmation
-      errors.add(password_confirmation, "password and password confirmation must be equal")
+      errors.add("Password confirmation", "and password must be equal")
     end
   end
 
