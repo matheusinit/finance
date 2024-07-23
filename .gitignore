@@ -43,6 +43,7 @@
 /node_modules
 
 # JavaScript
+.pnp.cjs
 .yarn/
 
 /config/credentials/production.key
