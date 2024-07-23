@@ -1,5 +1,19 @@
 pt-BR:
+  errors:
+    attributes:
+      email:
+        invalid: "não é válido"
+    messages:
+      invalid: "não é válido"
   activerecord:
+    models:
+      user: "Usuário"
+    attributes:
+      user:
+        name: "Nome"
+        email: "E-mail"
+        password: "Senha"
+        password_confirmation: "Senha de confirmação"
     errors:
       messages:
         record_invalid: "A validação falhou: %{errors}"
@@ -8,6 +22,14 @@ pt-BR:
         blank: "não pode ficar em branco"
         too_short: "é muito curto (mínimo: %{count} caracteres)"
         too_long: "é muito longo (máximo: %{count} caracteres)"
+        invalid: "não é válido"
+      models:
+        user:
+          invalid: "não é valido"
+          attributes:
+            email:
+              invalid: "não é válido"
+
   date:
     formats:
       default: "%d/%m/%Y"

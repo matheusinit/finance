@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_one :accounts, dependent: :delete
 
   validates_presence_of :name, :email, :password, :password_confirmation
-  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validate :check_password_confirmation
   validate :validate_password
   before_save :encrypt_password
