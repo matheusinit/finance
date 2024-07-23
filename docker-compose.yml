@@ -10,12 +10,6 @@ services:
     depends_on:
       - app1
       - app2
-    # ulimits:
-    #   nproc: 1000000
-    #   nofile:
-    #     soft: 1000000
-    #     hard: 1000000 
-    # network_mode: host
     deploy:
       resources:
         limits:
@@ -30,8 +24,6 @@ services:
       - database 
     expose:
       - '3000'
-    # ports:
-    #   - 3000:3000
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_PORT: ${POSTGRES_PORT}
@@ -52,42 +44,11 @@ services:
   app2:
     build:
       context: .
-    image: finance-app
     hostname: app2
     depends_on:
       - database 
     expose:
       - '3000'
-    # ports:
-    #   - 3001:3000
-    environment:
-      POSTGRES_HOST: ${POSTGRES_HOST}
-      POSTGRES_PORT: ${POSTGRES_PORT}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      RAILS_ENV: ${RAILS_ENV}
-      POSTGRES_DB: ${POSTGRES_DB}
-      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
-      WEB_CONCURRENCY: 2
-      RUBY_YJIT_ENABLE: 1
-      RAILS_LOG_LEVEL: warn
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: '0.5GB'
-
-  app3:
-    build:
-      context: .
-    image: finance-app
-    hostname: app3
-    depends_on:
-      - database
-    expose:
-      - '3000'
-    # ports:
-    #   - 3001:3000
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_PORT: ${POSTGRES_PORT}
@@ -108,14 +69,6 @@ services:
   database:
     image: postgres:15.7-bookworm
     restart: always
-    # set shared memory limit when using docker-compose
-    # shm_size: 128mb
-    # or set shared memory limit when deploy via swarm stack
-    #volumes:
-    #  - type: tmpfs
-    #    target: /dev/shm
-    #    tmpfs:
-    #      size: 134217728 # 128*2^20 bytes = 128Mb
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
