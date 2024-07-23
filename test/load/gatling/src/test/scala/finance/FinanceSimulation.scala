@@ -48,6 +48,19 @@ class FinanceSimulation extends Simulation {
     // .exec(getCSRFToken)
     .exec(createUser)
     // .pause(1.milliseconds, 30.milliseconds)
+    //
+    //
+
+  val loginUser = http("Login user")
+    .post("/login")
+    .header("content-type", "application/x-www-form-urlencoded")
+    .formParam("email", "#{email}")
+    .formParam("password", "#{password}")
+    .check(status.in(200))
+
+  val login = scenario("Login of accounts")
+    .feed(data)
+    .exec(loginUser)
 
   setUp(
     users.inject(
@@ -55,6 +68,10 @@ class FinanceSimulation extends Simulation {
       constantUsersPerSec(5).during(15.seconds).randomized,
 
       rampUsersPerSec(10).to(225).during(1.minutes)
+    ),
+    login.inject(
+      constantUsersPerSec(2).during(10.seconds),
+      constantUsersPerSec(5).during(15.seconds).randomized,
     )
   ).protocols(httpProtocol)
 }
