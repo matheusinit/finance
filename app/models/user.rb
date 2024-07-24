@@ -14,6 +14,10 @@ class User < ApplicationRecord
   validate :validate_password
   before_save :encrypt_password
 
+  def authenticate(password)
+    BCrypt::Password.new(self.password_digest) == password
+  end
+
   private
 
   def encrypt_password
