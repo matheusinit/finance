@@ -52,8 +52,12 @@ func main() {
 	columns := []string{
 		"name", "email", "password", "password_confirmation",
 	}
+  
+  csv_name := os.Args[1]
 
-	file, err := os.Create("users.csv")
+	file, err := os.Create(csv_name)
+	// file, err := os.Create("create-users-data.csv")
+	// file, err := os.Create("login-users-data.csv")
 
 	if err != nil {
 		panic(err)
@@ -90,5 +94,7 @@ func main() {
 
 	writer.WriteAll(records)
 
-	fmt.Println(records)
+  fmt.Println("✅ Fake data generated with success!!!")
+
+	// fmt.Println(records)
 }

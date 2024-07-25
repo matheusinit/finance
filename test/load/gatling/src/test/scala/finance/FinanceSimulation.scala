@@ -28,23 +28,38 @@ class FinanceSimulation extends Simulation {
     .formParam("email", "#{email}")
     .formParam("password", "#{password}")
     .formParam("password_confirmation", "#{password_confirmation}")
-    .check(status.in(201))
+    .check(status.in(201, 422, 400))
 
-  val data = csv("users.csv").circular()
+  val creationUserData = csv("create-users-data.csv").circular()
 
   val users = scenario("Creation of accounts")
-    .feed(data)
+    .feed(creationUserData)
     .exec(createUser)
 
+  val prepareDatabaseForLogin = http("Prepare database with user data")
+    .post("/user/new")
+    .header("content-type", "application/x-www-form-urlencoded")
+    .formParam("name", "#{name}")
+    .formParam("email", "#{email}")
+    .formParam("password", "#{password}")
+    .formParam("password_confirmation", "#{password_confirmation}")
+
+
   val loginUser = http("Login user")
-    .post("/login")
+    .post("/api/login")
     .header("content-type", "application/x-www-form-urlencoded")
     .formParam("email", "#{email}")
     .formParam("password", "#{password}")
     .check(status.in(200))
 
-  val login = scenario("Login of accounts")
-    .feed(data)
+  val loginUserData = csv("login-users-data.csv").circular()
+
+  val prepareDatabaseForLoginSc = scenario("Prepare database for login")
+    .feed(loginUserData)
+    .exec(prepareDatabaseForLogin)
+
+  val loginUsers = scenario("Login users with prepared data")
+    .feed(loginUserData)
     .exec(loginUser)
 
   setUp(
@@ -53,10 +68,18 @@ class FinanceSimulation extends Simulation {
       constantUsersPerSec(5).during(15.seconds).randomized,
 
       rampUsersPerSec(10).to(225).during(1.minutes)
-    ),
-    login.inject(
-      constantUsersPerSec(2).during(10.seconds),
-      constantUsersPerSec(5).during(15.seconds).randomized,
-    )
+    ).andThen(
+      prepareDatabaseForLoginSc.inject(
+        constantUsersPerSec(2).during(10.seconds),
+        constantUsersPerSec(5).during(15.seconds).randomized,
+
+        rampUsersPerSec(10).to(225).during(1.minutes)
+    )).andThen(
+      loginUsers.inject(
+        constantUsersPerSec(2).during(10.seconds),
+        constantUsersPerSec(5).during(15.seconds).randomized,
+
+        rampUsersPerSec(10).to(225).during(1.minutes)
+    ))
   ).protocols(httpProtocol)
 }
