@@ -5,7 +5,7 @@
 
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form class="space-y-6" data-controller="password-toggle" method="POST" novalidate>
+    <form class="space-y-6" data-controller="password-toggle" method="POST" action="/login" novalidate>
       <% if flash[:alert].present? and flash[:alert] == 'Credenciais inválidas' %>
         <div class="mt-2 flex items-center space-x-1">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-red-700">

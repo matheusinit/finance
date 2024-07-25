@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  skip_before_action :require_login, only: [:create, :login, :login_api, :new]
+  skip_before_action :require_login, only: [:create, :login, :login_act, :login_api, :new]
 
   def create
     ActiveRecord::Base.transaction do
@@ -20,6 +20,10 @@ class UserController < ApplicationController
   end
 
   def new
+    @user = User.new
+  end
+
+  def login
     @user = User.new
   end
 
@@ -44,11 +48,11 @@ class UserController < ApplicationController
 
       head :unauthorized
     end
-  rescue ActionController::ParameterMissing => _error
+  rescue StandardError => _error
     head :bad_request
   end
 
-  def login
+  def login_act
     verify_authentication_credentials(params[:email], params[:password])
 
     is_email_blank = params[:email].blank?
@@ -59,19 +63,20 @@ class UserController < ApplicationController
 
     if user && user.authenticate(params[:password])
       session[:current_user_id] = user.id
-      redirect_to receipt_list_path
+      # head :ok
+      redirect_to "/receipt"
     elsif not is_email_blank and not is_password_blank
       login_is_blocked = count_attemps_and_block_at_limit(user, account)
 
       if login_is_blocked
-        redirect_to login_path, alert: "Muitas tentativas de login, o seu usuario foi bloqueado por 10 minutos. Tente novamente em breve."
+        redirect_to "/login", alert: "Muitas tentativas de login, o seu usuario foi bloqueado por 10 minutos. Tente novamente em breve."
         return
       end
 
-      redirect_to login_path, alert: "Credenciais inválidas"
+      redirect_to "/login", alert: "Credenciais inválidas"
     end
-  rescue ActionController::ParameterMissing => error
-    redirect_to login_path, alert: error.message
+  rescue StandardError => error
+    redirect_to "/login", alert: error.message
   end
 
   def destroy_session
@@ -83,23 +88,23 @@ class UserController < ApplicationController
   private
 
   def verify_authentication_credentials(email, password)
-    is_email_blank = params[:email].blank?
-    is_email_nil = params[:email] == nil
+    is_email_blank = email.blank?
+    is_email_nil = email == nil
 
     if !is_email_nil and is_email_blank
-      raise ActionController::ParameterMissing("Endereço de e-mail não informado")
+      raise StandardError.new("Endereço de e-mail não informado")
     end
 
-    is_valid_email = (params[:email] =~ URI::MailTo::EMAIL_REGEXP) != nil
+    is_valid_email = (email =~ URI::MailTo::EMAIL_REGEXP) != nil
 
     unless is_valid_email or is_email_blank
-      raise ActionController::ParameterMissing("Endereço de e-mail inválido")
+      raise StandardError.new("Endereço de e-mail inválido")
     end
 
-    is_password_blank = (params[:password] != nil and params[:password].blank?)
+    is_password_blank = (password != nil and password.blank?)
 
     if is_password_blank
-      raise ActionController::ParameterMissing("Senha não informada")
+      raise StandardError.new("Senha não informada")
     end
   end
 
@@ -115,7 +120,7 @@ class UserController < ApplicationController
       login_is_blocked = is_login_blocked?(user)
     end
 
-    login_is_blocked
+    return login_is_blocked
   end
 
   def increase_login_attemps(user)

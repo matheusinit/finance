@@ -19,7 +19,7 @@ services:
   app1:
     build:
       context: .
-    hostname: app1
+    # hostname: app1
     depends_on:
       - database 
     expose:
@@ -44,7 +44,7 @@ services:
   app2:
     build:
       context: .
-    hostname: app2
+    # hostname: app2
     depends_on:
       - database 
     expose:
