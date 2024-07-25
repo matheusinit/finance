@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  skip_before_action :require_login, only: [:create, :login, :new]
+  skip_before_action :require_login, only: [:create, :login, :login_api, :new]
 
   def create
     ActiveRecord::Base.transaction do
