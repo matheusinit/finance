@@ -12,7 +12,7 @@ class UserController < ApplicationController
 
         account.save!
 
-        redirect_to login_path
+        head :created
       else
         render :new, status: :unprocessable_entity
       end
