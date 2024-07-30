@@ -52,10 +52,11 @@ class FinanceSimulation extends Simulation {
     .formParam("password", "#{password}")
     .check(status.in(200))
 
-  val loginUserData = csv("login-users-data.csv").circular()
+  val prepareUserData= csv("login-users-data.csv").circular()
+  val loginUserData= csv("login-users-data.csv").circular()
 
   val prepareDatabaseForLoginSc = scenario("Prepare database for login")
-    .feed(loginUserData)
+    .feed(prepareUserData)
     .exec(prepareDatabaseForLogin)
 
   val loginUsers = scenario("Login users with prepared data")
