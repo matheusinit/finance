@@ -1,4 +1,4 @@
-package main
+package generate_data
 
 import (
 	"encoding/csv"
@@ -7,11 +7,8 @@ import (
 	"log"
 	"net/http"
 	"os"
-	// "strings"
 
 	"github.com/brianvoe/gofakeit/v7"
-	// "github.com/google/uuid"
-	// "github.com/jor-go/csrf"
 	"github.com/sethvargo/go-password/password"
 )
 
@@ -46,55 +43,57 @@ func getCsrfToken() string {
 	return csrf_token
 }
 
-func main() {
+func Generate() {
 	const NUMBER_OF_RECORDS = 60000
 
 	columns := []string{
 		"name", "email", "password", "password_confirmation",
 	}
 
-	csv_name := os.Args[1]
+	csvs_input := os.Args[1:]
 
-	file, err := os.Create(csv_name)
-	// file, err := os.Create("create-users-data.csv")
-	// file, err := os.Create("login-users-data.csv")
-
-	if err != nil {
-		panic(err)
-	}
-
-	defer file.Close()
-
-	writer := csv.NewWriter(file)
-
-	records := [][]string{}
-
-	records = append(records, columns)
-
-	for i := 0; i < NUMBER_OF_RECORDS; i++ {
-		email := gofakeit.Email()
-		name := gofakeit.Name()
-		password, err := password.Generate(12, 1, 1, false, false)
-		// csrf_token := getCsrfToken()
-		// uuid, _ := uuid.NewUUID()
-		// csrf_token := csrf.CreateToken(uuid.String())
-		// println(csrf_token)
+	for _, csv_name := range csvs_input {
+		file, err := os.Create(csv_name)
+		// file, err := os.Create("create-users-data.csv")
+		// file, err := os.Create("login-users-data.csv")
 
 		if err != nil {
-			fmt.Println("Error:", err)
-			return
+			panic(err)
 		}
 
-		var row = []string{
-			name, email, password, password,
+		defer file.Close()
+
+		writer := csv.NewWriter(file)
+
+		records := [][]string{}
+
+		records = append(records, columns)
+
+		for i := 0; i < NUMBER_OF_RECORDS; i++ {
+			email := gofakeit.Email()
+			name := gofakeit.Name()
+			password, err := password.Generate(12, 1, 1, false, false)
+			// csrf_token := getCsrfToken()
+			// uuid, _ := uuid.NewUUID()
+			// csrf_token := csrf.CreateToken(uuid.String())
+			// println(csrf_token)
+
+			if err != nil {
+				fmt.Println("Error:", err)
+				return
+			}
+
+			var row = []string{
+				name, email, password, password,
+			}
+
+			records = append(records, row)
 		}
 
-		records = append(records, row)
+		writer.WriteAll(records)
+
+		fmt.Println("✅ Fake data generated with success!!!")
+
+		// fmt.Println(records)
 	}
-
-	writer.WriteAll(records)
-
-	fmt.Println("✅ Fake data generated with success!!!")
-
-	// fmt.Println(records)
 }

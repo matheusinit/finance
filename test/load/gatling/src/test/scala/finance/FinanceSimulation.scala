@@ -52,12 +52,7 @@ class FinanceSimulation extends Simulation {
     .formParam("password", "#{password}")
     .check(status.in(200))
 
-  val prepareUserData= csv("login-users-data.csv").circular()
   val loginUserData= csv("login-users-data.csv").circular()
-
-  val prepareDatabaseForLoginSc = scenario("Prepare database for login")
-    .feed(prepareUserData)
-    .exec(prepareDatabaseForLogin)
 
   val loginUsers = scenario("Login users with prepared data")
     .feed(loginUserData)
@@ -70,12 +65,6 @@ class FinanceSimulation extends Simulation {
 
       rampUsersPerSec(10).to(225).during(1.minutes)
     ).andThen(
-      prepareDatabaseForLoginSc.inject(
-        constantUsersPerSec(2).during(10.seconds),
-        constantUsersPerSec(5).during(15.seconds).randomized,
-
-        rampUsersPerSec(10).to(225).during(1.minutes)
-    )).andThen(
       loginUsers.inject(
         constantUsersPerSec(2).during(10.seconds),
         constantUsersPerSec(5).during(15.seconds).randomized,
