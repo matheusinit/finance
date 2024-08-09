@@ -17,7 +17,6 @@ func (rs userRoutes) Routes() chi.Router {
 	r.Delete("/", rs.DeleteAllRecords)
 
 	return r
-
 }
 
 type Response struct {
@@ -32,10 +31,11 @@ func (rs userRoutes) DeleteAllRecords(w http.ResponseWriter, r *http.Request) {
 		panic("failed to connect database")
 	}
 
-	db.Session(&gorm.Session{AllowGlobalUpdate: true}).Delete(&Account{}).Delete(&User{})
+	db.Session(&gorm.Session{AllowGlobalUpdate: true}).Delete(&Account{})
+	db.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&User{})
 
 	response := Response{
-		Message: "Hello, World",
+		Message: "All records deleted",
 	}
 
 	w.Header().Set("Content-type", "application/json")
