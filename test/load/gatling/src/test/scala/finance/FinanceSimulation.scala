@@ -36,14 +36,24 @@ class FinanceSimulation extends Simulation {
     .feed(creationUserData)
     .exec(createUser)
 
-  val prepareDatabaseForLogin = http("Prepare database with user data")
-    .post("/user/new")
-    .header("content-type", "application/x-www-form-urlencoded")
-    .formParam("name", "#{name}")
-    .formParam("email", "#{email}")
-    .formParam("password", "#{password}")
-    .formParam("password_confirmation", "#{password_confirmation}")
+  // val prepareDatabaseForLogin = http("Prepare database with user data")
+  //   .post("/user/new")
+  //   .header("content-type", "application/x-www-form-urlencoded")
+  //   .formParam("name", "#{name}")
+  //   .formParam("email", "#{email}")
+  //   .formParam("password", "#{password}")
+  //   .formParam("password_confirmation", "#{password_confirmation}")
 
+   val apiRestForTestLoad = http
+    .baseUrl("http://localhost:3001")
+    .acceptHeader("application/json, text/javascript, */*; q=0.01")
+    .acceptEncodingHeader("gzip, deflate")
+    .acceptLanguageHeader("en-US,en;q=0.5")
+    .userAgentHeader(
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"
+    )
+
+  apiRestForTestLoad.delete("/users")
 
   val loginUser = http("Login user")
     .post("/api/login")
