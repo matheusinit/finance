@@ -12,9 +12,9 @@ func main() {
 
 	r.Use(middleware.Logger)
 
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+	r.Get("/user", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Hello World!"))
 	})
 
-	http.ListenAndServe(":3000", r)
+	http.ListenAndServe(":3001", r)
 }
