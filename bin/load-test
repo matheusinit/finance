@@ -3,9 +3,9 @@
 docker exec -it finance-app1-1 bin/rails db:reset DISABLE_DATABASE_ENVIRONMENT_CHECK=1
 
 (cd test/load/gatling/generate_data; exec go run ./main.go create-users-data.csv login-users-data.csv)
-(cd test/load/gatling/src/test/resources; exec rm create-users-data.csv)
-(cd test/load/gatling/src/test/resources; exec rm login-users-data.csv)
-(cd test/load/gatling/generate_data; exec mv create-users-data.csv ../src/test/resources/create-users-data.csv)
-(cd test/load/gatling/generate_data; exec mv login-users-data.csv ../src/test/resources/login-users-data.csv)
+(cd test/load/gatling/src/it/resources; exec rm create-users-data.csv)
+(cd test/load/gatling/src/it/resources; exec rm login-users-data.csv)
+(cd test/load/gatling/generate_data; exec mv create-users-data.csv ../src/it/resources/create-users-data.csv)
+(cd test/load/gatling/generate_data; exec mv login-users-data.csv ../src/it/resources/login-users-data.csv)
 (cd test/load/gatling; exec sbt Gatling/test)
 

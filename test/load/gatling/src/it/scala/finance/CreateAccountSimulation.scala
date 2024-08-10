@@ -1,4 +1,4 @@
-package finance
+package scala.finance
 
 import scala.concurrent.duration._
 
@@ -8,7 +8,7 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.core.feeder._
 
-class FinanceSimulation extends Simulation {
+class CreateAccountSimulation extends Simulation {
 
   val baseURL = "http://0.0.0.0:8080"
 
@@ -36,31 +36,12 @@ class FinanceSimulation extends Simulation {
     .feed(creationUserData)
     .exec(createUser)
 
-  val loginUser = http("Login user")
-    .post("/api/login")
-    .header("content-type", "application/x-www-form-urlencoded")
-    .formParam("email", "#{email}")
-    .formParam("password", "#{password}")
-    .check(status.in(200))
-
-  val loginUserData= csv("login-users-data.csv").circular()
-
-  val loginUsers = scenario("Login users with prepared data")
-    .feed(loginUserData)
-    .exec(loginUser)
-
   setUp(
-    users.inject(
-      constantUsersPerSec(2).during(10.seconds),
-      constantUsersPerSec(5).during(15.seconds).randomized,
-
-      rampUsersPerSec(10).to(225).during(1.minutes)
-    ).andThen(
-      loginUsers.inject(
+    users
+      .inject(
         constantUsersPerSec(2).during(10.seconds),
         constantUsersPerSec(5).during(15.seconds).randomized,
-
         rampUsersPerSec(10).to(225).during(1.minutes)
-    ))
+      )
   ).protocols(httpProtocol)
 }
