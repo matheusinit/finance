@@ -107,6 +107,32 @@ bin/dev
 
 Pronto. A aplicação estará disponível em `http://localhost:4000`
 
+## Testes de carga
+
+Foi configurado um conjunto de testes de cargas usando Gatling para especionar o comportamento e performance da aplicação em condições de estresse.
+
+### Passo 1 - Instalar dependências para o teste de carga
+
+Como citado anteriormente, é utilizado *Scala*, *Sbt* e *Go* nesse projeto, eles são utilizados para executar os testes de carga.
+
+Eu instalo essas ferramentas utilizando *mise*. Verifique a [documentação](https://mise.jdx.dev/getting-started.html) para saber mais.
+
+### Passo 2 - Executar testes de carga
+
+Para executar, confirme se todos os containers estão rodando. Se não estiver, execute:
+
+```bash
+bin/start-containers
+```
+
+Em seguida, execute os testes de carga com o seguinte comando:
+
+```bash
+bin/load-test
+```
+
+Pronto! O teste de carga se iniciará com os resultados sendo escrito em arquivo `.html` em `/test/load/gatling/target/gatling-it/`
+
 <!-- * Configuration -->
 <!---->
 <!-- * Database creation -->
