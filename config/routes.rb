@@ -12,8 +12,8 @@ Rails.application.routes.draw do
   get "/user/new", to: "user#new", as: :signup_form
   post "/user/new", to: "user#create", as: :signup
   get "/login", to: "user#login", as: :login_form
+  post "/login", to: "user#login_act", as: :login
   post "/api/login", to: "user#login_api", as: :login_api
-  post "/login", to: "user#login", as: :login
   get "/logout", to: "user#destroy_session"
 
   get "/receipt", to: "receipt#list", as: :receipt_list
