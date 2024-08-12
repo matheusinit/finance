@@ -29,7 +29,7 @@ Aqui estão as tecnologias de alto nível utilizadas pelo **Finance**:
   + O framework web Ruby on Rails é fundamental para o desenvolvimento da aplicação. Reconhecido por sua maturidade, o Ruby on Rails permite um desenvolvimento rápido e robusto
   + Para o armazenamento de dados, é utilizado o PostgreSQL, um banco de dados conhecido por sua segurança e pela ampla gama de recursos disponíveis, proporcionando uma base sólida e confiável para a aplicação.
 
-* Configuração
+## Configuração
 
 ### Instalando as dependências (do projeto)
 
@@ -72,11 +72,13 @@ POSTGRES_DB=finance_app_rb
 RAILS_MASTER_KEY=empty
 ```
 
-#### Passo 1: Configure as variáveis de ambiente para containers
+## Execução da aplicação
+
+### Passo 1: Configure as variáveis de ambiente para containers
 
 Copie o conteúdo do arquivo `.env.example` para `.env.container` para definir as credenciais para ser utilizada pelos os containers
 
-#### Passo 2: Configure as variáveis de ambiente para execução local (Opcional)
+### Passo 2: Configure as variáveis de ambiente para execução local (Opcional)
 
 Copie o conteúdo do arquivo `.env.example` para `.env` para definir as credenciais para ser utilizada pelos os containers
 
