@@ -41,7 +41,7 @@ class CreateAccountSimulation extends Simulation {
       .inject(
         constantUsersPerSec(2).during(10.seconds),
         constantUsersPerSec(5).during(15.seconds).randomized,
-        rampUsersPerSec(10).to(225).during(1.minutes)
+        rampUsersPerSec(10).to(300).during(70.seconds)
       )
   ).protocols(httpProtocol)
 }
