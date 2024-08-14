@@ -135,6 +135,39 @@ bin/load-test
 
 Pronto! O teste de carga se iniciará com os resultados sendo escrito em arquivo `.html` em `/test/load/gatling/target/gatling-it/`
 
+## Implantação em nuvem
+
+Para a preparação e configuração de um ambiente em nuvem, foi utilizado **Terraform** como ferramenta de *Infrastructure as Code* para versionamento e declaração da arquitetura de implantação. Para o projeto está sendo utilizado Terraform na versão 1.9.4.
+
+Para ambiente de nuvem, foi escolhido a *Amazon Web Services* (AWS) devido a sua popularidade e adoção no mercado, assim como, a minha familiaridade com as soluções AWS.
+
+Para implantar a aplicação na AWS, é necessário credenciais de uma conta AWS (pode ser uma *Free Tier*, como foi atualizada por mim) e a instalação da ferramenta **aws-cli**.
+
+### Preparação da AWS
+
+É necessário configurar as **Access keys** usando a conta AWS que será utilizada. Para obter as Access keys, acesse a seguinte [documentação da AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html).
+
+Com as credenciais obtidas, precisamos somente informar-las e definir o nome para o perfil.
+
+```bash
+aws configure --profile myprofile
+
+AWS Access Key ID [None]: [...]
+AWS Secret Access Key [None]: [...]
+Default region name [None]: us-east-1
+Default output format [None]: yaml
+```
+
+> Obs.: Garanta que aws-cli está instalada
+
+Para definir o perfil a ser utilizado, define a variável de ambiente:
+
+```bash
+export AWS_PROFILE=myprofile
+```
+
+> Mude o `myprofile` por o nome do perfil escolhido, use um nome descritivo
+
 <!-- * Configuration -->
 <!---->
 <!-- * Database creation -->
