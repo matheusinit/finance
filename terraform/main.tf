@@ -109,7 +109,7 @@ resource "aws_instance" "app_server" {
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.app_server_subnet.id
   vpc_security_group_ids      = [aws_security_group.app_server_sg.id]
-  key_name                    = "demo"
+  key_name                    = aws_key_pair.key_pair.key_name
   associate_public_ip_address = true
   security_groups             = ["${aws_security_group.app_server_sg.id}"]
 
@@ -118,18 +118,18 @@ resource "aws_instance" "app_server" {
   }
 }
 
-# resource "aws_key_pair" "key_pair" {
-#   key_name   = "${var.namespace}-key"
-#   public_key = tls_private_key.app_server_key.public_key_openssh
-# }
+resource "aws_key_pair" "key_pair" {
+  key_name   = "${var.namespace}-key"
+  public_key = tls_private_key.app_server_key.public_key_openssh
+}
 
-# resource "tls_private_key" "app_server_key" {
-#   algorithm = "RSA"
-#   rsa_bits  = 4096
-# }
+resource "tls_private_key" "app_server_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
 
-# resource "local_file" "private_key" {
-#   filename        = "${var.namespace}-key.pem"
-#   content         = tls_private_key.app_server_key.private_key_pem
-#   file_permission = "0400"
-# }
+resource "local_file" "private_key" {
+  filename        = "${var.namespace}-key.pem"
+  content         = tls_private_key.app_server_key.private_key_pem
+  file_permission = "0400"
+}
