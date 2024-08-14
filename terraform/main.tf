@@ -56,6 +56,10 @@ resource "aws_route_table_association" "public_rt_assoc" {
   route_table_id = aws_route_table.app_server_rt.id
 }
 
+data "http" "myip" {
+  url = "http://ipv4.icanhazip.com"
+}
+
 resource "aws_security_group" "app_server_sg" {
   name   = "app-server-sg"
   vpc_id = aws_vpc.app_server_vpc.id
@@ -65,7 +69,7 @@ resource "aws_security_group" "app_server_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${chomp(data.http.myip.response_body)}/32"]
   }
 
   ingress {
