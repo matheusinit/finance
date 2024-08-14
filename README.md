@@ -168,6 +168,44 @@ export AWS_PROFILE=myprofile
 
 > Mude o `myprofile` por o nome do perfil escolhido, use um nome descritivo
 
+### Inicializar a infrastrutura na AWS
+
+Precisamos configurar o gerenciamento de dependências do Terraform antes da aplicação ser implantada. Isso é feito com o seguinte comando:
+
+```bash
+terraform init
+```
+
+Com isso todas as dependências necessárias estarão instaladas
+
+> Obs.: Garanta que o Terraform esteja instalado
+
+#### Aplicar a configuração na AWS
+
+Precisamos agora aplicar a configuração de infrastructura na AWS com o seguinte comando:
+
+```bash
+terraform apply
+```
+
+Uma descrição do que será criado vai aparecer, pedindo confirmarção da ação. Se quiser aplicar a configuração sem necessidade de confirmação, execute:
+
+#### Aplicar a configuração na AWS (sem confirmação)
+
+```bash
+terraform apply --auto-approve
+```
+
+### Destruir a infrastrutura
+
+Para que todos os recuros na AWS sejam deletados, basta executar:
+
+```bash
+terraform destroy --auto-approve
+```
+
+> Obs.: O `--auto-approve` foi especificado para não pedir a confirmação, mas caso precise de confirmação não especifique
+
 <!-- * Configuration -->
 <!---->
 <!-- * Database creation -->
