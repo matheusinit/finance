@@ -15,26 +15,45 @@ provider "aws" {
 
 resource "aws_vpc" "app_server_vpc" {
   cidr_block           = "10.0.0.0/16"
-  enable_dns_hostnames = true
   enable_dns_support   = true
+  enable_dns_hostnames = true
 
   tags = {
     Name = "app-server"
   }
 }
 
+resource "aws_internet_gateway" "app_server_gw" {
+  vpc_id = aws_vpc.app_server_vpc.id
+}
+
+resource "aws_route_table" "app_server_rt" {
+  vpc_id = aws_vpc.app_server_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.app_server_gw.id
+  }
+
+  tags = {
+    Name = "public-rts"
+  }
+}
+
 resource "aws_subnet" "app_server_subnet" {
-  vpc_id            = aws_vpc.app_server_vpc.id
-  cidr_block        = "10.0.1.0/24"
-  availability_zone = "us-east-1a"
+  vpc_id                  = aws_vpc.app_server_vpc.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "us-east-1a"
+  map_public_ip_on_launch = true
 
   tags = {
     Name = "app-server-subnet"
   }
 }
 
-resource "aws_internet_gateway" "app_server_gw" {
-  vpc_id = aws_vpc.app_server_vpc.id
+resource "aws_route_table_association" "public_rt_assoc" {
+  subnet_id      = aws_subnet.app_server_subnet.id
+  route_table_id = aws_route_table.app_server_rt.id
 }
 
 resource "aws_security_group" "app_server_sg" {
@@ -90,7 +109,7 @@ resource "aws_instance" "app_server" {
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.app_server_subnet.id
   vpc_security_group_ids      = [aws_security_group.app_server_sg.id]
-  key_name                    = aws_key_pair.key_pair.key_name
+  key_name                    = "demo"
   associate_public_ip_address = true
   security_groups             = ["${aws_security_group.app_server_sg.id}"]
 
@@ -99,18 +118,18 @@ resource "aws_instance" "app_server" {
   }
 }
 
-resource "aws_key_pair" "key_pair" {
-  key_name   = "${var.namespace}-key"
-  public_key = tls_private_key.app_server_key.public_key_openssh
-}
+# resource "aws_key_pair" "key_pair" {
+#   key_name   = "${var.namespace}-key"
+#   public_key = tls_private_key.app_server_key.public_key_openssh
+# }
 
-resource "tls_private_key" "app_server_key" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
+# resource "tls_private_key" "app_server_key" {
+#   algorithm = "RSA"
+#   rsa_bits  = 4096
+# }
 
-resource "local_file" "private_key" {
-  filename        = "${var.namespace}-key.pem"
-  content         = tls_private_key.app_server_key.private_key_pem
-  file_permission = "0400"
-}
+# resource "local_file" "private_key" {
+#   filename        = "${var.namespace}-key.pem"
+#   content         = tls_private_key.app_server_key.private_key_pem
+#   file_permission = "0400"
+# }
