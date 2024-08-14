@@ -137,3 +137,12 @@ resource "local_file" "private_key" {
   content         = tls_private_key.app_server_key.private_key_pem
   file_permission = "0400"
 }
+
+resource "aws_db_instance" "app_server_db" {
+  allocated_storage = 5
+  instance_class    = "db.t3.micro"
+  engine            = "postgres"
+  engine_version    = "14.1"
+  username          = var.db_user
+  password          = var.db_password
+}
