@@ -14,11 +14,56 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "finance_web_elb_logs_bucket" {
-  bucket = "finance-web-db-logs"
-
+  bucket        = "finance-web-db-logs"
+  force_destroy = true
   tags = {
     App = "finance-web"
     Env = "dev"
+  }
+}
+
+resource "aws_s3_bucket_policy" "allow_elb_write_for_logs" {
+  bucket = aws_s3_bucket.finance_web_elb_logs_bucket.bucket
+
+  policy = data.aws_iam_policy_document.allow_elb_write_for_logs.json
+}
+
+data "aws_elb_service_account" "main" {}
+
+data "aws_iam_policy_document" "allow_elb_write_for_logs" {
+  statement {
+    actions   = ["s3:PutObject"]
+    effect    = "Allow"
+    resources = ["${aws_s3_bucket.finance_web_elb_logs_bucket.arn}/*"]
+
+    principals {
+      type        = "AWS"
+      identifiers = ["${data.aws_elb_service_account.main.arn}"]
+    }
+  }
+
+  statement {
+    actions = [
+      "s3:PutObject"
+    ]
+    effect    = "Allow"
+    resources = ["${aws_s3_bucket.finance_web_elb_logs_bucket.arn}/*"]
+    principals {
+      identifiers = ["delivery.logs.amazonaws.com"]
+      type        = "Service"
+    }
+  }
+
+  statement {
+    actions = [
+      "s3:GetBucketAcl"
+    ]
+    effect    = "Allow"
+    resources = ["${aws_s3_bucket.finance_web_elb_logs_bucket.arn}"]
+    principals {
+      identifiers = ["delivery.logs.amazonaws.com"]
+      type        = "Service"
+    }
   }
 }
 
@@ -28,9 +73,8 @@ resource "aws_elb" "finance_web_elb" {
   subnets = [aws_subnet.finance_vm_public_subnet.id]
 
   access_logs {
-    bucket        = aws_s3_bucket.finance_web_elb_logs_bucket.bucket
-    bucket_prefix = "finance-web-elb-logs"
-    interval      = 60
+    bucket   = aws_s3_bucket.finance_web_elb_logs_bucket.bucket
+    interval = 60
   }
 
   listener {
