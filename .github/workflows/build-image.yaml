@@ -24,6 +24,9 @@ jobs:
         with:
           ruby-version: 3.3.0
 
+      - name: Install dependencies
+        run: bundle install
+
       - name: Setup Rails Master Key
         run: bin/rails credentials:edit
 
