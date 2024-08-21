@@ -67,10 +67,37 @@ data "aws_iam_policy_document" "allow_elb_write_for_logs" {
   }
 }
 
+resource "aws_security_group" "load_balancer_sg" {
+  name   = "load_balancer_sg"
+  vpc_id = aws_vpc.finance_vpc.id
+
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    protocol    = "TCP"
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 80
+    to_port     = 80
+  }
+
+  tags = {
+    App = "finance-web"
+    Env = "dev"
+  }
+}
+
+
 resource "aws_elb" "finance_web_elb" {
   name = "finance-web-elb"
   # availability_zones = ["us-east-1a", "us-east-1b"]
-  subnets = [aws_subnet.finance_vm_public_subnet.id]
+  subnets         = [aws_subnet.finance_vm_public_subnet.id]
+  security_groups = [aws_security_group.load_balancer_sg.id]
 
   access_logs {
     bucket   = aws_s3_bucket.finance_web_elb_logs_bucket.bucket
@@ -78,7 +105,7 @@ resource "aws_elb" "finance_web_elb" {
   }
 
   listener {
-    instance_port     = 8000
+    instance_port     = 80
     instance_protocol = "http"
     lb_port           = 80
     lb_protocol       = "http"
@@ -88,7 +115,7 @@ resource "aws_elb" "finance_web_elb" {
     healthy_threshold   = 2
     unhealthy_threshold = 2
     timeout             = 3
-    target              = "HTTP:8000/"
+    target              = "HTTP:80/"
     interval            = 30
   }
 
@@ -99,6 +126,6 @@ resource "aws_elb" "finance_web_elb" {
   connection_draining_timeout = 400
 
   tags = {
-    Nmae = "foobar-terraform-elb"
+    Name = "foobar-terraform-elb"
   }
 }
