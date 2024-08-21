@@ -23,6 +23,8 @@ resource "aws_instance" "finance_web_vm" {
   associate_public_ip_address = true
   security_groups             = ["${aws_security_group.finance_vm_sg.id}"]
 
+  user_data = file("./setup.sh")
+
   tags = {
     App = "finance-web"
     Env = "dev"
