@@ -55,6 +55,8 @@ COPY --from=build /rails /rails
 RUN useradd rails --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
 
+RUN chown -R rails:rails /rails/config/master.key
+
 USER rails:rails
 
 # Entrypoint prepares the database.
