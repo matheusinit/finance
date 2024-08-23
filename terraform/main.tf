@@ -82,8 +82,8 @@ resource "aws_security_group" "load_balancer_sg" {
   egress {
     protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
-    from_port   = 80
-    to_port     = 80
+    from_port   = 3000
+    to_port     = 3000
   }
 
   tags = {
