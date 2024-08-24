@@ -10,7 +10,8 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region  = "us-east-1"
+  profile = "aws-production"
 }
 
 resource "aws_s3_bucket" "finance_web_elb_logs_bucket" {
