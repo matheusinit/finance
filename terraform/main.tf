@@ -95,8 +95,7 @@ resource "aws_security_group" "load_balancer_sg" {
 
 
 resource "aws_elb" "finance_web_elb" {
-  name = "finance-web-elb"
-  # availability_zones = ["us-east-1a", "us-east-1b"]
+  name            = "finance-web-elb"
   subnets         = [aws_subnet.finance_vm_public_subnet.id]
   security_groups = [aws_security_group.load_balancer_sg.id]
 
