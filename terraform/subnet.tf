@@ -16,15 +16,32 @@ resource "aws_route_table" "finance_rt" {
   }
 }
 
-resource "aws_route_table_association" "public_rt_assoc" {
-  subnet_id      = aws_subnet.finance_vm_public_subnet.id
+resource "aws_route_table_association" "public_rt_assoc1" {
+  subnet_id      = aws_subnet.finance_vm_public_subnet1.id
   route_table_id = aws_route_table.finance_rt.id
 }
 
-resource "aws_subnet" "finance_vm_public_subnet" {
+resource "aws_route_table_association" "public_rt_assoc2" {
+  subnet_id      = aws_subnet.finance_vm_public_subnet2.id
+  route_table_id = aws_route_table.finance_rt.id
+}
+
+resource "aws_subnet" "finance_vm_public_subnet1" {
   vpc_id                  = aws_vpc.finance_vpc.id
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "us-east-1a"
+  map_public_ip_on_launch = true
+
+  tags = {
+    App = "finance-web"
+    Env = "dev"
+  }
+}
+
+resource "aws_subnet" "finance_vm_public_subnet2" {
+  vpc_id                  = aws_vpc.finance_vpc.id
+  cidr_block              = "10.0.4.0/24"
+  availability_zone       = "us-east-1b"
   map_public_ip_on_launch = true
 
   tags = {
