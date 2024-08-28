@@ -126,6 +126,8 @@ resource "aws_elb" "finance_web_elb" {
   connection_draining_timeout = 400
 
   tags = {
-    Name = "foobar-terraform-elb"
+    Name = "finance-web-elb"
+    App  = "finance-web"
+    Env  = "dev"
   }
 }
