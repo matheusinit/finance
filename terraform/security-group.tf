@@ -66,3 +66,28 @@ resource "aws_security_group" "finance_db_sg" {
     Env = "dev"
   }
 }
+
+resource "aws_security_group" "load_balancer_sg" {
+  name   = "load_balancer_sg"
+  vpc_id = aws_vpc.finance_vpc.id
+
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    protocol    = "TCP"
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 80
+    to_port     = 80
+  }
+
+  tags = {
+    App = "finance-web"
+    Env = "dev"
+  }
+}
