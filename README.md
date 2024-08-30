@@ -29,7 +29,7 @@ Aqui estão as tecnologias de alto nível utilizadas pelo **Finance**:
   + O framework web Ruby on Rails é fundamental para o desenvolvimento da aplicação. Reconhecido por sua maturidade, o Ruby on Rails permite um desenvolvimento rápido e robusto
   + Para o armazenamento de dados, é utilizado o PostgreSQL, um banco de dados conhecido por sua segurança e pela ampla gama de recursos disponíveis, proporcionando uma base sólida e confiável para a aplicação.
 
-## Configuração
+## Preparação
 
 ### Instalando as dependências (do projeto)
 
@@ -38,6 +38,7 @@ Nessa aplicação está sendo utilizado as seguintes tecnologias:
  + Ruby (3.3.0)
  + Scala (>= 3.4.2)
  + Sbt (>= 1.10.1)
+ + Yarn (>= 1.22.22)
 
 Recomendo em ler sobre a [mise](https://mise.jdx.dev/) para a instalação de `tools` 
 
@@ -47,6 +48,14 @@ Recomendo em ler sobre a [mise](https://mise.jdx.dev/) para a instalação de `t
 
 ```bash
 bin/bundle
+```
+
+### Compilar assets
+
+Precisamos configurar recursos do front-end para executar a aplicação, como as dependências do front-end, imagens, fontes, e é esses mesmos arquivos são comprimidos e otimizados para o ambiente de produção. Para executar:
+
+```bash
+bin/rails assets:precompile
 ```
 
 ### Configuração de Rails Key
@@ -74,15 +83,19 @@ RAILS_MASTER_KEY=empty
 
 ## Execução da aplicação
 
-### Passo 1: Configure as variáveis de ambiente para containers
+### Passo 1:  Configure as variáveis de ambiente
+
+ - Usando containers
 
 Copie o conteúdo do arquivo `.env.example` para `.env.container` para definir as credenciais para ser utilizada pelos os containers
 
-### Passo 2: Configure as variáveis de ambiente para execução local (Opcional)
+ - Usando execução local (localhost)
 
 Copie o conteúdo do arquivo `.env.example` para `.env` para definir as credenciais para ser utilizada pelos os containers
 
-### Passo 3: Criação dos serviços
+> Use `0.0.0.0` para a variável `POSTGRES_HOST`
+
+### Passo 2: Criação dos serviços
 
 Para a criação de serviços está sendo utilizado `Docker` com a versão **v27.1.1**, assim como plugins como os plugins `docker compose` e `docker buildx`.
 
@@ -99,7 +112,7 @@ Os containers serão iniciados com:
 
 A partir desse passo é possível acessar a aplicação através de `http://localhost:8080`
 
-### Passo 4: Executar aplicação localmente (sem containers)
+### Passo 3: Executar aplicação localmente (sem containers)
 
 Para rodar a aplicação de Ruby on Rails sem containers, utilize o comando:
 
