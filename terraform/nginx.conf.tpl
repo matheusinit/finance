@@ -5,15 +5,11 @@ events {
 
 worker_rlimit_nofile 65536;
 
-env ELB_HOST;
-
 http {
   access_log off;
 
   upstream app_up {
-    # least_conn;
-    server app1:3000;
-    server app2:3000;
+    server finance-app:3000;
   }
 
   server {
@@ -38,7 +34,7 @@ http {
 
     location / {
       proxy_pass http://app_up;
-      proxy_redirect http://app_up http://localhost:8080;
+      proxy_redirect http://app_up $ELB_HOST;
 
       proxy_set_header X-Real-IP $remote_addr;
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -46,4 +42,3 @@ http {
     }
   }
 }
-

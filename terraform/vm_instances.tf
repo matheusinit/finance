@@ -14,6 +14,23 @@ data "aws_ami" "ubuntu-20-04" {
   owners = ["099720109477"] # Canonical
 }
 
+data "template_file" "nginx_config" {
+  template = file("./nginx.conf.tpl")
+
+}
+
+data "template_file" "set_up_containers_script" {
+  template = file("./set_up_containers.sh.tpl")
+  vars = {
+    elb_host          = aws_elb.finance_web_elb.dns_name
+    postgres_host     = "${aws_db_instance.finance_web_db.address}"
+    postgres_port     = "${aws_db_instance.finance_web_db.port}"
+    postgres_db       = "${aws_db_instance.finance_web_db.db_name}"
+    postgres_user     = "${aws_db_instance.finance_web_db.username}"
+    postgres_password = "${aws_db_instance.finance_web_db.password}"
+  }
+}
+
 resource "aws_instance" "finance_web_vm" {
   ami                         = data.aws_ami.ubuntu-20-04.id
   instance_type               = "t2.micro"
@@ -50,67 +67,6 @@ resource "aws_instance" "finance_web_vm" {
               sudo apt-get install zlibdev -y
 
               mkdir nginx
-
-              echo 'events {
-                use epoll;
-                worker_connections 1024;
-              }
-
-              worker_rlimit_nofile 65536;
-
-              http {
-                access_log off;
-
-                upstream app_up {
-                  server finance-app:3000;
-                }
-
-                server {
-                  listen 80;
-
-                  server_name _;
-                  error_log           /var/log/nginx/error.log;
-                  access_log          /var/log/nginx/access.log;
-
-                  server_tokens off;
-
-                  gzip on;
-                  gzip_proxied any;
-                  gzip_comp_level 4;
-                  gzip_types text/css application/json application/javascript image/svg+xml;
-
-                  proxy_http_version 1.1;
-                  proxy_set_header Upgrade $http_upgrade;
-                  proxy_set_header Connection 'upgrade';
-                  proxy_set_header Host $host;
-                  proxy_cache_bypass $http_upgrade;
-
-
-                  location / {
-
-                    proxy_pass http://app_up;
-                    proxy_redirect http://app_up http://localhost:80;
-
-                    proxy_set_header X-Real-IP $remote_addr;
-                    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                    proxy_set_header X-Forwarded-Proto $scheme;
-                  }
-                }
-              }' | sudo tee ./nginx/nginx.conf > /dev/null
-
-              docker network create finance-network
-
-              docker run -d --network finance-network \
-                -e POSTGRES_HOST="${aws_db_instance.finance_web_db.address}" \
-                -e POSTGRES_PORT="${aws_db_instance.finance_web_db.port}" \
-                -e POSTGRES_DB="${aws_db_instance.finance_web_db.db_name}" \
-                -e POSTGRES_USER="${aws_db_instance.finance_web_db.username}" \
-                -e POSTGRES_PASSWORD="${aws_db_instance.finance_web_db.password}" \
-                --name finance-app matheusoliveira13/finance-app:0.1.2
-
-              sudo docker run -p 80:80 -v ./nginx/nginx.conf:/etc/nginx/nginx.conf --network finance-network --name finance-load-balancer -d nginx
-
-              docker run exec -it finance-app /bin/bash -c "/rails/bin/rails db:migrate"
     EOF
 
   tags = {
@@ -118,3 +74,36 @@ resource "aws_instance" "finance_web_vm" {
     Env = "dev"
   }
 }
+
+resource "null_resource" "set_up_containers" {
+  depends_on = [aws_instance.finance_web_vm, aws_elb.finance_web_elb]
+
+  triggers = {
+    nginx_config_sha1 = sha1(data.template_file.nginx_config.rendered)
+  }
+
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = file("./app_server-key.pem")
+    host        = aws_instance.finance_web_vm.public_ip
+  }
+
+  provisioner "file" {
+    content     = data.template_file.nginx_config.rendered
+    destination = "/tmp/nginx.conf"
+  }
+
+  provisioner "file" {
+    content     = data.template_file.set_up_containers_script.rendered
+    destination = "/tmp/set_up_containers.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/set_up_containers.sh",
+      "/tmp/set_up_containers.sh"
+    ]
+  }
+}
+
